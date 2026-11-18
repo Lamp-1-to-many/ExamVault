@@ -29,8 +29,21 @@
   <style>
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background-color: #f8fafc;
+      background: radial-gradient(circle at top right, #eef2ff 0%, #f8fafc 38%, #f1f5f9 100%);
+      background-attachment: fixed;
       color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .bg-white.rounded-2xl {
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 24px -14px rgba(15, 23, 42, 0.08);
+    }
+    input:focus, select:focus, textarea:focus {
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
+      border-color: #6366f1 !important;
+    }
+    #cbt-timer {
+      font-variant-numeric: tabular-nums;
     }
     /* Rich Text / Markdown / Math / Code styling */
     .rich-content p { margin-bottom: 0.5rem; line-height: 1.6; }
@@ -84,27 +97,19 @@
       padding: 0.25rem 0;
       margin: 0.5rem 0;
     }
-    /* Smooth view & UI transitions */
+    /* Clean, subtle view transitions */
     html {
       scroll-behavior: smooth;
     }
     button, a, select, input, textarea {
-      transition: background-color 0.3s ease-in-out,
-                  border-color 0.3s ease-in-out,
-                  color 0.3s ease-in-out,
-                  box-shadow 0.3s ease-in-out,
-                  transform 0.28s ease-out,
-                  opacity 0.3s ease-in-out;
-    }
-    button:active:not(:disabled) {
-      transform: scale(0.985);
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     }
     .fade-in {
-      animation: fadeIn 0.4s ease-out;
+      animation: fadeIn 0.22s ease-out;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -115,11 +120,11 @@
 </head>
 <body class="min-h-screen flex flex-col">
   <!-- Top Navigation -->
-  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
+  <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-[0_1px_12px_rgba(15,23,42,0.03)]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 gap-3">
         <button type="button" id="brand-home-btn" class="flex items-center gap-2.5 shrink-0 text-left focus:outline-none">
-          <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-sm">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-sm">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
             </svg>
@@ -1151,96 +1156,155 @@
     // =========================================================================
     // BULK IMPORT MODAL WITH GUIDE
     // =========================================================================
-    function parseSimpleBulkText(rawText, defaultSubject, defaultTopic) {
-      const blocks = rawText
-        .split(/\n\s*---\s*\n|\n\s*\n(?=\s*(?:Subject:|Topic:|Q:|\d+\.))/i)
-        .map((b) => b.trim())
-        .filter(Boolean);
+    function downloadCsvFile(csvText, filename) {
+      const blob = new Blob([csvText], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
 
-      if (blocks.length === 0) {
-        throw new Error('No question blocks found. Separate questions with --- on its own line.');
+    function parseCsvRows(text) {
+      const rows = [];
+      let row = [];
+      let field = '';
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        const next = text[i + 1];
+        if (inQuotes) {
+          if (ch === '"' && next === '"') {
+            field += '"';
+            i++;
+          } else if (ch === '"') {
+            inQuotes = false;
+          } else {
+            field += ch;
+          }
+        } else {
+          if (ch === '"') {
+            inQuotes = true;
+          } else if (ch === ',') {
+            row.push(field);
+            field = '';
+          } else if (ch === '\r' && next === '\n') {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = '';
+            i++;
+          } else if (ch === '\n' || ch === '\r') {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = '';
+          } else {
+            field += ch;
+          }
+        }
+      }
+      if (field.length > 0 || row.length > 0) {
+        row.push(field);
+        rows.push(row);
+      }
+      return rows.filter((r) => r.some((cell) => cell.trim() !== ''));
+    }
+
+    function parseBulkCsv(rawCsv, defaultSubject, defaultTopic) {
+      const rows = parseCsvRows(rawCsv.trim());
+      if (rows.length < 2) {
+        throw new Error('CSV must include a header row and at least one question row.');
+      }
+      const headers = rows[0].map((h) => h.trim().toLowerCase().replace(/[\s_]+/g, ''));
+      const col = (names) => {
+        for (const n of names) {
+          const i = headers.indexOf(n);
+          if (i !== -1) return i;
+        }
+        return -1;
+      };
+
+      const iSubj = col(['subject']);
+      const iTop = col(['topic']);
+      const iQ = col(['question', 'questiontext']);
+      const iA = col(['optiona', 'a']);
+      const iB = col(['optionb', 'b']);
+      const iC = col(['optionc', 'c']);
+      const iD = col(['optiond', 'd']);
+      const iE = col(['optione', 'e']);
+      const iAns = col(['answer', 'rightanswer', 'correct', 'correctanswer']);
+      const iExp = col(['explanation', 'exp']);
+
+      if (iQ === -1 || iA === -1 || iB === -1 || iAns === -1) {
+        throw new Error('CSV header must include: question, optionA, optionB, and answer (plus optional subject, topic, optionC, optionD, optionE, explanation).');
       }
 
       const now = Date.now();
       const imported = [];
 
-      blocks.forEach((block, idx) => {
-        const lines = block.split(/\r?\n/);
-        let subject = defaultSubject.trim();
-        let topic = defaultTopic.trim();
-        let questionLines = [];
-        let options = [];
-        let answerLetter = null;
-        let explanationLines = [];
-        let mode = 'question';
+      for (let r = 1; r < rows.length; r++) {
+        const cells = rows[r];
+        const get = (idx) => (idx !== -1 && cells[idx] !== undefined ? cells[idx].trim() : '');
 
-        for (const line of lines) {
-          const subjMatch = line.match(/^Subject\s*:\s*(.+)$/i);
-          const topMatch = line.match(/^Topic\s*:\s*(.+)$/i);
-          const qMatch = line.match(/^(?:Q(?:uestion)?\s*[:\.]|\d+\.)\s*(.*)$/i);
-          const optMatch = line.match(/^([A-Ea-e])[\)\.]\s+(.+)$/);
-          const ansMatch = line.match(/^(?:Answer|Ans|Right)\s*:\s*([A-Ea-e])\b/i);
-          const expMatch = line.match(/^(?:Explanation|Exp)\s*:\s*(.*)$/i);
-
-          if (subjMatch) {
-            subject = subjMatch[1].trim();
-          } else if (topMatch) {
-            topic = topMatch[1].trim();
-          } else if (qMatch && options.length === 0 && questionLines.length === 0) {
-            mode = 'question';
-            if (qMatch[1].trim()) questionLines.push(qMatch[1].trim());
-          } else if (optMatch) {
-            mode = 'options';
-            options.push(optMatch[2].trim());
-          } else if (ansMatch) {
-            mode = 'answer';
-            answerLetter = ansMatch[1].toUpperCase();
-          } else if (expMatch) {
-            mode = 'explanation';
-            if (expMatch[1].trim()) explanationLines.push(expMatch[1].trim());
-          } else {
-            if (mode === 'explanation') explanationLines.push(line);
-            else if (mode === 'question') questionLines.push(line);
-            else if (mode === 'options' && options.length > 0) {
-              options[options.length - 1] += '\n' + line;
-            }
-          }
-        }
-
-        const questionText = questionLines.join('\n').trim();
-        const explanation = explanationLines.join('\n').trim();
+        const subject = get(iSubj) || defaultSubject.trim();
+        const topic = get(iTop) || defaultTopic.trim();
+        const questionText = get(iQ);
+        const rawOpts = [get(iA), get(iB), get(iC), get(iD), get(iE)];
+        const ansRaw = get(iAns).toUpperCase();
+        const explanation = get(iExp);
 
         if (!subject || !topic) {
-          throw new Error(`Question #${idx + 1}: Subject and Topic are required (set default Subject/Topic above or add Subject:/Topic: lines).`);
+          throw new Error(`Row ${r + 1}: Subject and Topic are required (fill the CSV columns or set Default Subject/Topic above).`);
         }
         if (!questionText) {
-          throw new Error(`Question #${idx + 1}: Missing question text (start with Q:).`);
+          throw new Error(`Row ${r + 1}: Question text is empty.`);
         }
-        if (options.length < 2 || options.length > 5) {
-          throw new Error(`Question #${idx + 1}: Must have 2 to 5 options (A) ... B) ...). Found ${options.length}.`);
+        if (!rawOpts[0] || !rawOpts[1]) {
+          throw new Error(`Row ${r + 1}: optionA and optionB are compulsory.`);
         }
-        if (!answerLetter) {
-          throw new Error(`Question #${idx + 1}: Missing "Answer: A" (or B/C/D/E) line.`);
+
+        const options = [];
+        const letterMap = ['A', 'B', 'C', 'D', 'E'];
+        let ansLetter = ansRaw;
+        if (/^[1-5]$/.test(ansRaw)) ansLetter = letterMap[Number(ansRaw) - 1];
+
+        let targetOrigIdx = letterMap.indexOf(ansLetter);
+        if (targetOrigIdx === -1) {
+          throw new Error(`Row ${r + 1}: Invalid answer "${ansRaw}". Use A, B, C, D, or E.`);
         }
-        const cIdx = ['A', 'B', 'C', 'D', 'E'].indexOf(answerLetter);
-        if (cIdx < 0 || cIdx >= options.length) {
-          throw new Error(`Question #${idx + 1}: Answer "${answerLetter}" does not match the ${options.length} provided options.`);
+
+        let mappedCorrect = -1;
+        rawOpts.forEach((optVal, oIdx) => {
+          if (optVal) {
+            if (oIdx === targetOrigIdx) mappedCorrect = options.length;
+            options.push(optVal);
+          }
+        });
+
+        if (options.length < 2) {
+          throw new Error(`Row ${r + 1}: At least 2 options are required.`);
+        }
+        if (mappedCorrect === -1) {
+          throw new Error(`Row ${r + 1}: Answer "${ansRaw}" points to an empty option.`);
         }
 
         imported.push({
-          id: 'q_' + now + '_' + idx + '_' + Math.random().toString(36).slice(2, 6),
+          id: 'q_' + now + '_' + r + '_' + Math.random().toString(36).slice(2, 6),
           subject,
           topic,
           questionText,
           imageData: null,
           options,
-          correctIndex: cIdx,
+          correctIndex: mappedCorrect,
           explanation,
           createdAt: now,
           updatedAt: now
         });
-      });
-
+      }
       return imported;
     }
 
@@ -1264,22 +1328,9 @@
         }
       ];
 
-      const sampleSimpleText = `Subject: Physics
-Topic: Optics
-Q: What is the speed of light in vacuum ($c$)?
-A) $3 \\times 10^8\\text{ m/s}$
-B) $3 \\times 10^6\\text{ m/s}$
-C) $1.5 \\times 10^8\\text{ m/s}$
-Answer: A
-Explanation: Light travels at approximately $3 \\times 10^8\\text{ m/s}$ in vacuum.
----
-Subject: Computer Science
-Topic: Python
-Q: Which keyword defines a function in Python?
-A) \`func\`
-B) \`def\`
-C) \`function\`
-Answer: B`;
+      const sampleCsvText = `subject,topic,question,optionA,optionB,optionC,optionD,optionE,answer,explanation
+Physics,Optics,"What is the speed of light in vacuum ($c$)?","$3 \\times 10^8\\text{ m/s}$","$3 \\times 10^6\\text{ m/s}$","$1.5 \\times 10^8\\text{ m/s}$","","",A,"Light travels at approximately $3 \\times 10^8\\text{ m/s}$ in vacuum."
+Computer Science,Python,"Which keyword defines a function in Python?","\`func\`","\`def\`","\`function\`","","",B,"In Python, functions are defined using the \`def\` keyword."`;
 
       let activeTab = 'simple'; // 'simple' | 'json'
       const subjectsList = getUniqueSubjects();
@@ -1292,48 +1343,51 @@ Answer: B`;
 
         <!-- Mode Tabs -->
         <div class="px-6 pt-3 border-b border-slate-200 bg-white flex gap-2">
-          <button type="button" id="bi-tab-simple" class="px-4 py-2 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-700">Simple Text Mode (Easy)</button>
+          <button type="button" id="bi-tab-simple" class="px-4 py-2 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-700">CSV Mode (Easy)</button>
           <button type="button" id="bi-tab-json" class="px-4 py-2 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800">JSON Mode (Advanced)</button>
         </div>
 
         <div class="p-6 overflow-y-auto space-y-5 flex-1">
-          <!-- SIMPLE TEXT TAB -->
+          <!-- CSV TAB -->
           <div id="bi-panel-simple" class="space-y-4">
             <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-4 text-sm text-slate-700 space-y-2">
               <div class="flex items-center justify-between flex-wrap gap-2">
-                <h4 class="font-bold text-emerald-900">Simple Text Format Guide (No JSON Required)</h4>
-                <button type="button" id="bi-load-simple-sample" class="px-3 py-1 rounded-lg bg-white border border-emerald-200 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">Load Sample Text</button>
+                <h4 class="font-bold text-emerald-900">CSV Bulk Import Format Guide</h4>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="bi-load-simple-sample" class="px-3 py-1 rounded-lg bg-white border border-emerald-200 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">Load Sample CSV</button>
+                  <button type="button" id="bi-download-csv-sample" class="px-3 py-1 rounded-lg bg-white border border-emerald-200 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">Download Sample CSV</button>
+                </div>
               </div>
               <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm">
-                <li>Write each question in plain text and separate multiple questions with <code>---</code> on a new line.</li>
-                <li>Start the question with <code>Q:</code>, options with <code>A)</code>, <code>B)</code> (up to <code>E)</code>), and the right answer with <code>Answer: A</code> (or B–E).</li>
-                <li>Optionally add <code>Subject:</code>, <code>Topic:</code>, and <code>Explanation:</code> lines (or set a default Subject &amp; Topic below for the whole batch).</li>
-                <li><strong>Math &amp; Code:</strong> Paste <code>$...$</code>, <code>$$...$$</code>, and <code>\`\`\`code\`\`\`</code> directly—no backslash escaping needed!</li>
+                <li>Prepare your questions in Excel, Google Sheets, or any text editor and export/paste as <strong>CSV</strong>.</li>
+                <li><strong>Required columns:</strong> <code>question</code>, <code>optionA</code>, <code>optionB</code>, and <code>answer</code> (<code>A</code>–<code>E</code>).</li>
+                <li><strong>Optional columns:</strong> <code>subject</code>, <code>topic</code> (if omitted, Default Subject/Topic below will be used), <code>optionC</code>, <code>optionD</code>, <code>optionE</code>, and <code>explanation</code>.</li>
+                <li>Wrap any text containing commas or line breaks in double quotes <code>"..."</code>. Supports LaTeX math (<code>$...$</code>) and Markdown/code directly.</li>
               </ul>
-              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs overflow-x-auto font-mono">${escapeHtml(sampleSimpleText)}</pre>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs overflow-x-auto font-mono">${escapeHtml(sampleCsvText)}</pre>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Default Subject <span class="text-slate-400 font-normal">(used if Subject: omitted)</span></label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Default Subject <span class="text-slate-400 font-normal">(used if subject column is blank)</span></label>
                 <input id="bi-def-subj" list="bi-subj-list" placeholder="e.g., Physics" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
                 <datalist id="bi-subj-list">
                   ${subjectsList.map((s) => `<option value="${escapeHtml(s)}"></option>`).join('')}
                 </datalist>
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Default Topic <span class="text-slate-400 font-normal">(used if Topic: omitted)</span></label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Default Topic <span class="text-slate-400 font-normal">(used if topic column is blank)</span></label>
                 <input id="bi-def-top" placeholder="e.g., General" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
               </div>
             </div>
 
             <div class="space-y-2">
               <div class="flex items-center justify-between flex-wrap gap-2">
-                <label class="block text-xs font-semibold text-slate-700">Paste Questions or Upload .txt File</label>
-                <input id="bi-simple-file" type="file" accept=".txt,.md" class="text-xs text-slate-600 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+                <label class="block text-xs font-semibold text-slate-700">Paste CSV Content or Upload .csv File</label>
+                <input id="bi-simple-file" type="file" accept=".csv,text/csv" class="text-xs text-slate-600 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
               </div>
-              <textarea id="bi-simple-textarea" rows="8" placeholder="Q: Your question here?&#10;A) Option 1&#10;B) Option 2&#10;Answer: A&#10;---&#10;Q: Next question..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
-              <div id="bi-simple-status" class="text-xs text-slate-500">Ready to parse.</div>
+              <textarea id="bi-simple-textarea" rows="7" placeholder="subject,topic,question,optionA,optionB,optionC,optionD,answer,explanation&#10;Math,Algebra,2+2=?,3,4,5,6,B,Basic addition" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+              <div id="bi-simple-status" class="text-xs text-slate-500">Ready to parse CSV.</div>
             </div>
           </div>
 
@@ -1407,12 +1461,12 @@ Answer: B`;
       function updateSimplePreview() {
         const val = simpleTextarea.value.trim();
         if (!val) {
-          simpleStatus.textContent = 'Ready to parse.';
+          simpleStatus.textContent = 'Ready to parse CSV.';
           simpleStatus.className = 'text-xs text-slate-500';
           return;
         }
         try {
-          const parsed = parseSimpleBulkText(val, defSubjEl.value, defTopEl.value);
+          const parsed = parseBulkCsv(val, defSubjEl.value, defTopEl.value);
           simpleStatus.textContent = `✓ Detected ${parsed.length} valid question(s) ready to import.`;
           simpleStatus.className = 'text-xs font-semibold text-emerald-700';
         } catch (e) {
@@ -1426,8 +1480,11 @@ Answer: B`;
       defTopEl.addEventListener('input', updateSimplePreview);
 
       document.getElementById('bi-load-simple-sample').addEventListener('click', () => {
-        simpleTextarea.value = sampleSimpleText;
+        simpleTextarea.value = sampleCsvText;
         updateSimplePreview();
+      });
+      document.getElementById('bi-download-csv-sample').addEventListener('click', () => {
+        downloadCsvFile(sampleCsvText, 'examvault-sample-import.csv');
       });
 
       document.getElementById('bi-simple-file').addEventListener('change', async (e) => {
@@ -1453,12 +1510,12 @@ Answer: B`;
         if (activeTab === 'simple') {
           const raw = simpleTextarea.value.trim();
           if (!raw) {
-            errEl.textContent = 'Please paste your questions or upload a .txt file.';
+            errEl.textContent = 'Please paste CSV content or upload a .csv file.';
             errEl.classList.remove('hidden');
             return;
           }
           try {
-            const imported = parseSimpleBulkText(raw, defSubjEl.value, defTopEl.value);
+            const imported = parseBulkCsv(raw, defSubjEl.value, defTopEl.value);
             state.questions = [...imported, ...state.questions];
             safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
             closeModal();
@@ -1790,37 +1847,41 @@ Answer: B`;
     function renderQuestionCard(q) {
       const checked = state.selectedQuestionIds.has(q.id);
       return `
-        <div class="bg-white rounded-2xl border ${checked ? 'border-indigo-400 ring-2 ring-indigo-100' : 'border-slate-200'} p-5 shadow-2xs transition-all">
-          <div class="flex items-start justify-between gap-3">
-            <div class="flex items-start gap-3 flex-1 min-w-0">
-              <input type="checkbox" data-id="${escapeHtml(q.id)}" ${checked ? 'checked' : ''} class="qb-check-item mt-1 w-4 h-4 rounded text-indigo-600 shrink-0 cursor-pointer" />
-              <div class="flex-1 min-w-0 space-y-3">
-                <div class="text-sm sm:text-base text-slate-900 font-medium">${renderRichText(q.questionText)}</div>
-                ${q.imageData ? `
-                  <div class="p-2 bg-slate-50 border border-slate-200 rounded-xl inline-block">
-                    <img src="${q.imageData}" alt="Question diagram" class="max-h-48 max-w-full rounded object-contain" />
-                  </div>
-                ` : ''}
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  ${q.options.map((opt, idx) => `
-                    <div class="flex items-start gap-2 px-3 py-2 rounded-lg border text-sm ${idx === q.correctIndex ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-700'}">
-                      <span class="font-bold text-xs px-1.5 py-0.5 rounded ${idx === q.correctIndex ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'} shrink-0 mt-0.5">${optionLetter(idx)}</span>
-                      <div class="flex-1 min-w-0">${renderRichText(opt)}</div>
-                    </div>
-                  `).join('')}
-                </div>
-                ${q.explanation ? `
-                  <details class="text-xs sm:text-sm bg-amber-50/60 border border-amber-200 rounded-xl px-3.5 py-2.5 text-slate-700">
-                    <summary class="font-semibold text-amber-900 cursor-pointer select-none">View Explanation</summary>
-                    <div class="mt-2 pt-2 border-t border-amber-200/60">${renderRichText(q.explanation)}</div>
-                  </details>
-                ` : ''}
+        <div class="bg-white rounded-2xl border ${checked ? 'border-indigo-400 ring-2 ring-indigo-100' : 'border-slate-200'} p-4 sm:p-5 shadow-2xs transition-all">
+          <!-- Compact Top Action Bar (keeps full width for question content below) -->
+          <div class="flex items-center justify-between gap-2 pb-2.5 mb-3 border-b border-slate-100">
+            <label class="inline-flex items-center gap-2 text-xs font-medium text-slate-500 cursor-pointer select-none">
+              <input type="checkbox" data-id="${escapeHtml(q.id)}" ${checked ? 'checked' : ''} class="qb-check-item w-4 h-4 rounded text-indigo-600 cursor-pointer" />
+              <span>Select</span>
+            </label>
+            <div class="flex items-center gap-1.5">
+              <button data-id="${escapeHtml(q.id)}" class="qb-edit-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-indigo-600 bg-indigo-50/60 hover:bg-indigo-100">Edit</button>
+              <button data-id="${escapeHtml(q.id)}" class="qb-del-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 bg-rose-50/60 hover:bg-rose-100">Delete</button>
+            </div>
+          </div>
+
+          <!-- Full-Width Question Content -->
+          <div class="space-y-3">
+            <div class="text-sm sm:text-base text-slate-900 font-medium">${renderRichText(q.questionText)}</div>
+            ${q.imageData ? `
+              <div class="p-2 bg-slate-50 border border-slate-200 rounded-xl inline-block">
+                <img src="${q.imageData}" alt="Question diagram" class="max-h-48 max-w-full rounded object-contain" />
               </div>
+            ` : ''}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${q.options.map((opt, idx) => `
+                <div class="flex items-start gap-2 px-3 py-2 rounded-lg border text-sm ${idx === q.correctIndex ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-700'}">
+                  <span class="font-bold text-xs px-1.5 py-0.5 rounded ${idx === q.correctIndex ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'} shrink-0 mt-0.5">${optionLetter(idx)}</span>
+                  <div class="flex-1 min-w-0">${renderRichText(opt)}</div>
+                </div>
+              `).join('')}
             </div>
-            <div class="flex items-center gap-1 shrink-0">
-              <button data-id="${escapeHtml(q.id)}" class="qb-edit-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-indigo-600 hover:bg-indigo-50">Edit</button>
-              <button data-id="${escapeHtml(q.id)}" class="qb-del-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50">Delete</button>
-            </div>
+            ${q.explanation ? `
+              <details class="text-xs sm:text-sm bg-amber-50/60 border border-amber-200 rounded-xl px-3.5 py-2.5 text-slate-700">
+                <summary class="font-semibold text-amber-900 cursor-pointer select-none">View Explanation</summary>
+                <div class="mt-2 pt-2 border-t border-amber-200/60">${renderRichText(q.explanation)}</div>
+              </details>
+            ` : ''}
           </div>
         </div>
       `;
@@ -1945,7 +2006,7 @@ Answer: B`;
 
         main.innerHTML = `
           <div class="max-w-2xl mx-auto bg-white rounded-2xl border border-slate-200 p-8 text-center space-y-5 fade-in">
-            <div class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto flex items-center justify-center text-2xl font-bold">${pct}%</div>
+            <div class="inline-flex items-center justify-center min-w-[5.5rem] px-5 py-3 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto text-2xl font-bold whitespace-nowrap">${pct}%</div>
             <h2 class="text-2xl font-bold text-slate-900">Practice Session Complete</h2>
             <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
               <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
@@ -2066,8 +2127,22 @@ Answer: B`;
       document.getElementById('pr-exit').addEventListener('click', () => { p.active = false; renderApp(); });
       main.querySelectorAll('.pr-opt-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
-          p.answers[q.id] = Number(btn.dataset.opt);
-          renderApp();
+          const chosen = Number(btn.dataset.opt);
+          p.answers[q.id] = chosen;
+          main.querySelectorAll('.pr-opt-btn').forEach((b) => {
+            const isSel = Number(b.dataset.opt) === chosen;
+            b.className = `pr-opt-btn w-full text-left flex items-start gap-3 p-3.5 rounded-xl border ${
+              isSel ? 'border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-100' : 'border-slate-200 bg-white hover:bg-slate-50'
+            }`;
+            const badge = b.querySelector('span');
+            if (badge) {
+              badge.className = `w-6 h-6 rounded-md text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ${
+                isSel ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
+              }`;
+            }
+          });
+          const chkBtn = document.getElementById('pr-check');
+          if (chkBtn) chkBtn.disabled = false;
         });
       });
       document.getElementById('pr-check')?.addEventListener('click', () => {
@@ -2465,25 +2540,25 @@ Answer: B`;
 
           <!-- Scorecards -->
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            <div class="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+            <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
               <div class="text-xs text-slate-500">Score</div>
-              <div class="text-xl font-bold text-indigo-600 mt-1">${res.score} / ${res.maxScore}</div>
+              <div class="text-lg sm:text-xl font-bold text-indigo-600 mt-1 break-words">${res.score} / ${res.maxScore}</div>
             </div>
-            <div class="bg-emerald-50 rounded-2xl border border-emerald-200 p-4 text-center">
+            <div class="bg-emerald-50 rounded-2xl border border-emerald-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
               <div class="text-xs text-emerald-700">Right</div>
-              <div class="text-xl font-bold text-emerald-700 mt-1">${res.correctCount}</div>
+              <div class="text-lg sm:text-xl font-bold text-emerald-700 mt-1">${res.correctCount}</div>
             </div>
-            <div class="bg-rose-50 rounded-2xl border border-rose-200 p-4 text-center">
+            <div class="bg-rose-50 rounded-2xl border border-rose-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
               <div class="text-xs text-rose-700">Wrong</div>
-              <div class="text-xl font-bold text-rose-700 mt-1">${res.wrongCount}</div>
+              <div class="text-lg sm:text-xl font-bold text-rose-700 mt-1">${res.wrongCount}</div>
             </div>
-            <div class="bg-slate-50 rounded-2xl border border-slate-200 p-4 text-center">
+            <div class="bg-slate-50 rounded-2xl border border-slate-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
               <div class="text-xs text-slate-500">Unattempted</div>
-              <div class="text-xl font-bold text-slate-700 mt-1">${res.unattemptedCount}</div>
+              <div class="text-lg sm:text-xl font-bold text-slate-700 mt-1">${res.unattemptedCount}</div>
             </div>
-            <div class="bg-white rounded-2xl border border-slate-200 p-4 text-center col-span-2 sm:col-span-1">
+            <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 text-center col-span-2 sm:col-span-1 flex flex-col items-center justify-center min-w-0">
               <div class="text-xs text-slate-500">Accuracy</div>
-              <div class="text-xl font-bold text-slate-900 mt-1">${accuracy}%</div>
+              <div class="text-lg sm:text-xl font-bold text-slate-900 mt-1 whitespace-nowrap">${accuracy}%</div>
             </div>
           </div>
 
@@ -2701,7 +2776,7 @@ Answer: B`;
             <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-2">
               <h2 class="font-bold text-slate-900">6. Bulk Import &amp; Encrypted Backups</h2>
               <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
-                <li><strong>Bulk Import (Simple Text &amp; JSON):</strong> Quickly paste plain-text questions (<code>Q:</code>, <code>A)</code>–<code>E)</code>, <code>Answer:</code> separated by <code>---</code>) or import structured JSON via the <em>Bulk Import &amp; Guide</em> modal.</li>
+                <li><strong>Bulk Import (CSV &amp; JSON):</strong> Import spreadsheets/tables via <strong>CSV Mode</strong> (with downloadable sample CSV &amp; format guide) or structured <strong>JSON Mode</strong> via the <em>Bulk Import &amp; Guide</em> modal.</li>
                 <li><strong>AES-256-GCM Encrypted Backup &amp; Restore:</strong> Both the <strong>Question Bank</strong> page and the <strong>Exam History</strong> page have their own dedicated Backup &amp; Restore buttons, encrypted locally using PBKDF2 + AES-GCM.</li>
               </ul>
             </div>
