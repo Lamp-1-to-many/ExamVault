@@ -1,0 +1,3592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExamVault — MCQ Question Bank, Practice &amp; Mock Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at top right, #eef2ff 0%, #f8fafc 38%, #f1f5f9 100%);
+      background-attachment: fixed;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .bg-white.rounded-2xl {
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 24px -14px rgba(15, 23, 42, 0.08);
+    }
+    input:focus, select:focus, textarea:focus {
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
+      border-color: #6366f1 !important;
+    }
+    #cbt-timer {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Rich Text / Markdown / Math / Code styling */
+    .rich-content p { margin-bottom: 0.5rem; line-height: 1.6; }
+    .rich-content p:last-child { margin-bottom: 0; }
+    .rich-content ul { list-style-type: disc; padding-left: 1.4rem; margin-bottom: 0.5rem; }
+    .rich-content ol { list-style-type: decimal; padding-left: 1.4rem; margin-bottom: 0.5rem; }
+    .rich-content blockquote {
+      border-left: 3px solid #6366f1;
+      padding-left: 0.75rem;
+      color: #475569;
+      margin: 0.5rem 0;
+      font-style: italic;
+    }
+    .rich-content code:not(pre code) {
+      background-color: #f1f5f9;
+      color: #be185d;
+      padding: 0.12rem 0.35rem;
+      border-radius: 0.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875em;
+    }
+    .rich-content pre {
+      margin: 0.65rem 0;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      background: #0d1117;
+      padding: 0.85rem 1rem;
+    }
+    .rich-content pre code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      background: transparent;
+      padding: 0;
+    }
+    .rich-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+    .rich-content th, .rich-content td {
+      border: 1px solid #cbd5e1;
+      padding: 0.4rem 0.6rem;
+      text-align: left;
+    }
+    .rich-content th { background-color: #f1f5f9; font-weight: 600; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+      margin: 0.5rem 0;
+    }
+    /* Clean, subtle view transitions */
+    html {
+      scroll-behavior: smooth;
+    }
+    button, a, select, input, textarea {
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .fade-in {
+      animation: fadeIn 0.22s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-[0_1px_12px_rgba(15,23,42,0.03)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-3">
+        <button type="button" id="brand-home-btn" class="flex items-center gap-2.5 shrink-0 text-left focus:outline-none">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+          </div>
+          <div>
+            <span class="font-bold text-lg tracking-tight text-slate-900">ExamVault</span>
+            <span class="hidden sm:inline-block ml-1.5 text-xs font-medium px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700">MCQ Suite</span>
+          </div>
+        </button>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-1" id="desktop-nav">
+          <button data-nav="home" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors">Home</button>
+          <button data-nav="bank" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors">Question Bank</button>
+          <button data-nav="practice" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors">Practice Mode</button>
+          <button data-nav="exam" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors">Exam Mode</button>
+          <button data-nav="history" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors">History</button>
+          <button data-nav="about" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium transition-colors">About &amp; Guide</button>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100" aria-label="Toggle Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Nav Drawer -->
+      <div id="mobile-nav" class="hidden md:hidden pb-3 pt-1 border-t border-slate-100 flex flex-col gap-1">
+        <button data-nav="home" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Home</button>
+        <button data-nav="bank" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Question Bank</button>
+        <button data-nav="practice" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Practice Mode</button>
+        <button data-nav="exam" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Exam Mode</button>
+        <button data-nav="history" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium">History</button>
+        <button data-nav="about" class="nav-btn w-full text-left px-3 py-2 rounded-lg text-sm font-medium">About &amp; Guide</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="app-main" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6"></main>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- Modal Backdrop & Container -->
+  <div id="modal-root" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4 overflow-y-auto">
+    <div id="modal-box" class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden my-auto"></div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // STORAGE & INITIAL SAMPLE DATA
+    // =========================================================================
+    const STORAGE_KEYS = {
+      QUESTIONS: 'examvault_questions_v1',
+      HISTORY: 'examvault_history_v1'
+    };
+
+    const SAMPLE_DIAGRAM_SVG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" width="360" height="180">
+        <rect width="360" height="180" fill="#f8fafc" rx="10"/>
+        <line x1="40" y1="90" x2="100" y2="90" stroke="#334155" stroke-width="2.5"/>
+        <rect x="100" y="74" width="60" height="32" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2" rx="4"/>
+        <text x="130" y="95" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#312e81">R₁ = 4Ω</text>
+        <line x1="160" y1="90" x2="200" y2="90" stroke="#334155" stroke-width="2.5"/>
+        <rect x="200" y="74" width="60" height="32" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2" rx="4"/>
+        <text x="230" y="95" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#312e81">R₂ = 6Ω</text>
+        <line x1="260" y1="90" x2="320" y2="90" stroke="#334155" stroke-width="2.5"/>
+        <line x1="40" y1="90" x2="40" y2="145" stroke="#334155" stroke-width="2.5"/>
+        <line x1="320" y1="90" x2="320" y2="145" stroke="#334155" stroke-width="2.5"/>
+        <line x1="40" y1="145" x2="165" y2="145" stroke="#334155" stroke-width="2.5"/>
+        <line x1="195" y1="145" x2="320" y2="145" stroke="#334155" stroke-width="2.5"/>
+        <line x1="165" y1="130" x2="165" y2="160" stroke="#dc2626" stroke-width="3"/>
+        <line x1="178" y1="137" x2="178" y2="153" stroke="#dc2626" stroke-width="3"/>
+        <line x1="186" y1="130" x2="186" y2="160" stroke="#dc2626" stroke-width="3"/>
+        <line x1="195" y1="137" x2="195" y2="153" stroke="#dc2626" stroke-width="3"/>
+        <text x="180" y="34" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a">Series DC Circuit (V = 20V)</text>
+      </svg>`
+    );
+
+    const DEFAULT_QUESTIONS = [
+      {
+        id: 'q_sample_1',
+        subject: 'Physics',
+        topic: 'Current Electricity',
+        questionText: 'In the **series circuit** shown in the diagram below, a $20\\text{ V}$ battery is connected across $R_1 = 4\\,\\Omega$ and $R_2 = 6\\,\\Omega$. What is the current $I$ flowing through the circuit?',
+        imageData: SAMPLE_DIAGRAM_SVG,
+        options: [
+          '$1.0\\text{ A}$',
+          '$2.0\\text{ A}$',
+          '$3.33\\text{ A}$',
+          '$5.0\\text{ A}$'
+        ],
+        correctIndex: 1,
+        explanation: 'Total resistance in series is $R_{\\text{eq}} = R_1 + R_2 = 4 + 6 = 10\\,\\Omega$. By Ohm\'s Law:\n\n$$I = \\frac{V}{R_{\\text{eq}}} = \\frac{20}{10} = 2.0\\text{ A}$$',
+        createdAt: Date.now() - 86400000 * 3,
+        updatedAt: Date.now() - 86400000 * 3
+      },
+      {
+        id: 'q_sample_2',
+        subject: 'Computer Science',
+        topic: 'Algorithms & Complexity',
+        questionText: 'What is the output and time complexity of the following Python function when called with `mystery(5)`?\n\n```python\ndef mystery(n):\n    if n <= 1:\n        return n\n    return mystery(n - 1) + mystery(n - 2)\n```',
+        imageData: null,
+        options: [
+          'Output: `5`, Time: $O(n)$',
+          'Output: `5`, Time: $O(2^n)$',
+          'Output: `8`, Time: $O(2^n)$',
+          'Output: `8`, Time: $O(n \\log n)$',
+          'Output: `3`, Time: $O(n^2)$'
+        ],
+        correctIndex: 1,
+        explanation: 'The function computes the $n$-th Fibonacci number recursively without memoization: $F(5) = 5$. Because each call branches into two recursive calls, the recurrence $T(n) = T(n-1) + T(n-2) + O(1)$ yields exponential time complexity $O(2^n)$.',
+        createdAt: Date.now() - 86400000 * 2,
+        updatedAt: Date.now() - 86400000 * 2
+      },
+      {
+        id: 'q_sample_3',
+        subject: 'Mathematics',
+        topic: 'Calculus',
+        questionText: 'Evaluate the definite integral:\n\n$$\\int_{0}^{\\pi/2} \\sin(x) \\cos(x)\\,dx$$',
+        imageData: null,
+        options: [
+          '$0$',
+          '$\\frac{1}{4}$',
+          '$\\frac{1}{2}$',
+          '$1$'
+        ],
+        correctIndex: 2,
+        explanation: 'Using substitution $u = \\sin(x)$, $du = \\cos(x)\\,dx$. When $x = 0, u = 0$; when $x = \\pi/2, u = 1$.\n\n$$\\int_0^1 u\\,du = \\left[\\frac{u^2}{2}\\right]_0^1 = \\frac{1}{2}$$',
+        createdAt: Date.now() - 86400000,
+        updatedAt: Date.now() - 86400000
+      },
+      {
+        id: 'q_sample_4',
+        subject: 'Computer Science',
+        topic: 'Data Structures',
+        questionText: 'Which data structure is **best suited** for implementing an **LRU (Least Recently Used) Cache** with $O(1)$ average time complexity for both `get` and `put` operations?',
+        imageData: null,
+        options: [
+          'Hash Map + Doubly Linked List',
+          'Binary Search Tree + Stack',
+          'Min-Heap + Queue'
+        ],
+        correctIndex: 0,
+        explanation: 'A **Hash Map** provides $O(1)$ key lookup to node references, while a **Doubly Linked List** allows $O(1)$ insertion at the head and $O(1)$ removal of the tail (least recently used) node.',
+        createdAt: Date.now() - 43200000,
+        updatedAt: Date.now() - 43200000
+      },
+      {
+        id: 'q_sample_5',
+        subject: 'Mathematics',
+        topic: 'Linear Algebra',
+        questionText: 'If $A$ is a $3 \\times 3$ matrix with $\\det(A) = 4$, what is the value of $\\det(2A)$?',
+        imageData: null,
+        options: [
+          '$8$',
+          '$16$',
+          '$32$'
+        ],
+        correctIndex: 2,
+        explanation: 'For an $n \\times n$ matrix $A$ and scalar $k$, $\\det(kA) = k^n \\det(A)$. Here $n = 3$ and $k = 2$, so $\\det(2A) = 2^3 \\times 4 = 8 \\times 4 = 32$.',
+        createdAt: Date.now() - 21600000,
+        updatedAt: Date.now() - 21600000
+      }
+    ];
+
+    function safeLoad(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function safeSave(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        showToast('Storage quota warning: unable to persist to browser storage.', 'error');
+      }
+    }
+
+    // =========================================================================
+    // APPLICATION STATE
+    // =========================================================================
+    const state = {
+      currentPage: 'home', // 'home' | 'bank' | 'practice' | 'exam' | 'history' | 'about'
+      questions: safeLoad(STORAGE_KEYS.QUESTIONS, null) ?? (() => {
+        safeSave(STORAGE_KEYS.QUESTIONS, DEFAULT_QUESTIONS);
+        return JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+      })(),
+      examHistory: safeLoad(STORAGE_KEYS.HISTORY, []),
+
+      // Question Bank filters & selection
+      bankFilterSource: 'ALL',
+      bankFilterSubject: 'ALL',
+      bankFilterTopic: 'ALL',
+      bankGroupBy: 'source', // 'source' | 'subject'
+      bankSearch: '',
+      bankGroupBySubject: true,
+      collapsedSubjects: new Set(),
+      expandedTopics: new Set(),
+      selectedQuestionIds: new Set(),
+
+      // Practice Mode state
+      practice: {
+        active: false,
+        finished: false,
+        mode: 'subject', // 'subject' | 'random'
+        subject: 'ALL',
+        topic: 'ALL',
+        randomCount: 5,
+        queue: [],
+        currentIndex: 0,
+        answers: {}, // questionId -> selectedIndex
+        checked: {}  // questionId -> boolean
+      },
+
+      // Exam Mode state (CBT)
+      exam: {
+        phase: 'setup', // 'setup' | 'running' | 'result'
+        config: {
+          examName: 'Full Syllabus Mock Test',
+          subject: 'ALL',
+          topic: 'ALL',
+          questionCount: 5,
+          durationMinutes: 15,
+          positiveMarks: 4,
+          negativeMarks: 1
+        },
+        questions: [],
+        currentIndex: 0,
+        // statuses: 'not_visited' | 'not_answered' | 'answered' | 'marked' | 'answered_marked'
+        statuses: {},
+        responses: {}, // index -> selectedIndex | null
+        remainingSeconds: 0,
+        startTime: 0,
+        timerId: null,
+        lastResult: null,
+        paletteOpenMobile: false
+      },
+
+      // History review & date group collapse
+      historyReviewId: null,
+      collapsedHistoryDates: new Set()
+    };
+
+    // =========================================================================
+    // UTILITIES: RICH TEXT + MATH + CODE RENDERING
+    // =========================================================================
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function renderRichText(raw) {
+      if (!raw) return '';
+      let text = String(raw);
+
+      // Protect fenced code blocks & inline code first
+      const codeBlocks = [];
+      text = text.replace(/```([\w+-]*)\n([\s\S]*?)```/g, (_, lang, code) => {
+        const idx = codeBlocks.length;
+        codeBlocks.push({ type: 'block', lang: lang || 'plaintext', code });
+        return `@@CODEBLOCK_${idx}@@`;
+      });
+
+      const inlineCodes = [];
+      text = text.replace(/`([^`\n]+)`/g, (_, code) => {
+        const idx = inlineCodes.length;
+        inlineCodes.push(code);
+        return `@@INLINECODE_${idx}@@`;
+      });
+
+      // Protect display & inline LaTeX math
+      const mathTokens = [];
+      text = text.replace(/\$\$([\s\S]+?)\$\$/g, (m) => {
+        const idx = mathTokens.length;
+        mathTokens.push(m);
+        return `@@MATH_${idx}@@`;
+      });
+      text = text.replace(/\\\[([\s\S]+?)\\\]/g, (m) => {
+        const idx = mathTokens.length;
+        mathTokens.push(m);
+        return `@@MATH_${idx}@@`;
+      });
+      text = text.replace(/\\\(([\s\S]+?)\\\)/g, (m) => {
+        const idx = mathTokens.length;
+        mathTokens.push(m);
+        return `@@MATH_${idx}@@`;
+      });
+      text = text.replace(/\$([^\n$]+?)\$/g, (m) => {
+        const idx = mathTokens.length;
+        mathTokens.push(m);
+        return `@@MATH_${idx}@@`;
+      });
+
+      // Parse Markdown
+      let html = '';
+      if (window.marked) {
+        html = window.marked.parse(text, { breaks: true, gfm: true });
+      } else {
+        html = escapeHtml(text).replace(/\n/g, '<br>');
+      }
+
+      // Basic XSS sanitization (strip script/iframe/on* attributes)
+      html = html.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+                 .replace(/<iframe[\s\S]*?>[\s\S]*?<\/iframe>/gi, '')
+                 .replace(/\son\w+\s*=\s*(['"]).*?\1/gi, '');
+
+      // Restore math tokens (escaped safely for HTML text node so KaTeX auto-render parses them)
+      html = html.replace(/@@MATH_(\d+)@@/g, (_, i) => escapeHtml(mathTokens[Number(i)]));
+
+      // Restore inline code
+      html = html.replace(/@@INLINECODE_(\d+)@@/g, (_, i) => `<code>${escapeHtml(inlineCodes[Number(i)])}</code>`);
+
+      // Restore code blocks
+      html = html.replace(/@@CODEBLOCK_(\d+)@@/g, (_, i) => {
+        const blk = codeBlocks[Number(i)];
+        return `<pre><code class="language-${escapeHtml(blk.lang)}">${escapeHtml(blk.code)}</code></pre>`;
+      });
+
+      return `<div class="rich-content">${html}</div>`;
+    }
+
+    function enhanceRenderedContent(rootEl) {
+      if (!rootEl) return;
+      // Highlight.js
+      if (window.hljs) {
+        rootEl.querySelectorAll('pre code').forEach((block) => {
+          if (!block.dataset.highlighted) {
+            window.hljs.highlightElement(block);
+            block.dataset.highlighted = 'yes';
+          }
+        });
+      }
+      // KaTeX auto-render
+      if (window.renderMathInElement) {
+        try {
+          window.renderMathInElement(rootEl, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        } catch (e) {
+          // ignore partial math parse errors during live preview
+        }
+      }
+    }
+
+    // =========================================================================
+    // TOAST & MODAL HELPERS (NO alert/confirm/prompt)
+    // =========================================================================
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const colors = {
+        info: 'bg-slate-900 text-white',
+        success: 'bg-emerald-600 text-white',
+        error: 'bg-rose-600 text-white',
+        warning: 'bg-amber-600 text-white'
+      };
+      const el = document.createElement('div');
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-lg text-sm font-medium flex items-center justify-between gap-3 fade-in ${colors[type] || colors.info}`;
+      el.innerHTML = `<span>${escapeHtml(message)}</span>`;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.25s';
+        setTimeout(() => el.remove(), 250);
+      }, 3200);
+    }
+
+    function openModal(htmlContent, maxWidthClass = 'max-w-3xl') {
+      const root = document.getElementById('modal-root');
+      const box = document.getElementById('modal-box');
+      box.className = `bg-white rounded-2xl shadow-2xl border border-slate-200 w-full ${maxWidthClass} max-h-[90vh] flex flex-col overflow-hidden my-auto fade-in`;
+      box.innerHTML = htmlContent;
+      root.classList.remove('hidden');
+      root.classList.add('flex');
+      enhanceRenderedContent(box);
+    }
+
+    function closeModal() {
+      const root = document.getElementById('modal-root');
+      root.classList.add('hidden');
+      root.classList.remove('flex');
+      document.getElementById('modal-box').innerHTML = '';
+    }
+
+    function openConfirmModal({ title, message, confirmLabel = 'Confirm', danger = true, onConfirm }) {
+      openModal(`
+        <div class="p-6">
+          <h3 class="text-lg font-bold text-slate-900">${escapeHtml(title)}</h3>
+          <p class="mt-2 text-sm text-slate-600">${escapeHtml(message)}</p>
+          <div class="mt-6 flex justify-end gap-2.5">
+            <button id="confirm-cancel-btn" class="px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 text-slate-700 hover:bg-slate-50">Cancel</button>
+            <button id="confirm-ok-btn" class="px-4 py-2 rounded-lg text-sm font-medium text-white ${danger ? 'bg-rose-600 hover:bg-rose-700' : 'bg-indigo-600 hover:bg-indigo-700'}">${escapeHtml(confirmLabel)}</button>
+          </div>
+        </div>
+      `, 'max-w-md');
+      document.getElementById('confirm-cancel-btn').addEventListener('click', closeModal);
+      document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+        closeModal();
+        onConfirm();
+      });
+    }
+
+    // =========================================================================
+    // ENCRYPTED BACKUP & RESTORE (WEB CRYPTO AES-GCM + PBKDF2)
+    // =========================================================================
+    function bufToBase64(buf) {
+      const bytes = new Uint8Array(buf);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      return btoa(bin);
+    }
+
+    function base64ToBuf(b64) {
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return bytes.buffer;
+    }
+
+    async function deriveAesKey(password, saltBytes, iterations = 100000) {
+      const enc = new TextEncoder();
+      const keyMaterial = await crypto.subtle.importKey(
+        'raw',
+        enc.encode(password),
+        'PBKDF2',
+        false,
+        ['deriveKey']
+      );
+      return crypto.subtle.deriveKey(
+        {
+          name: 'PBKDF2',
+          salt: saltBytes,
+          iterations,
+          hash: 'SHA-256'
+        },
+        keyMaterial,
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+      );
+    }
+
+    async function encryptPayload(dataObj, password, backupType) {
+      if (!window.crypto || !window.crypto.subtle) {
+        throw new Error('Web Crypto API is unavailable in this browser context.');
+      }
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const key = await deriveAesKey(password, salt, 100000);
+      const enc = new TextEncoder();
+      const plaintext = enc.encode(JSON.stringify(dataObj));
+      const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plaintext);
+      return {
+        format: 'examvault-encrypted-v1',
+        type: backupType, // 'questions' | 'exams'
+        alg: 'AES-256-GCM',
+        kdf: 'PBKDF2-SHA256',
+        iterations: 100000,
+        salt: bufToBase64(salt),
+        iv: bufToBase64(iv),
+        ciphertext: bufToBase64(ciphertext),
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    async function decryptPayload(envelope, password, expectedType) {
+      if (!window.crypto || !window.crypto.subtle) {
+        throw new Error('Web Crypto API is unavailable in this browser context.');
+      }
+      if (!envelope || envelope.format !== 'examvault-encrypted-v1') {
+        throw new Error('Invalid backup file format.');
+      }
+      if (envelope.type !== expectedType) {
+        throw new Error(`This backup is for "${envelope.type}", not "${expectedType}".`);
+      }
+      const salt = new Uint8Array(base64ToBuf(envelope.salt));
+      const iv = new Uint8Array(base64ToBuf(envelope.iv));
+      const ciphertext = base64ToBuf(envelope.ciphertext);
+      const key = await deriveAesKey(password, salt, envelope.iterations || 100000);
+      const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext);
+      const dec = new TextDecoder();
+      return JSON.parse(dec.decode(plainBuf));
+    }
+
+    function downloadJsonFile(obj, filename) {
+      const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function openEncryptedBackupModal(backupType) {
+      const isQuestions = backupType === 'questions';
+      const count = isQuestions ? state.questions.length : state.examHistory.length;
+      if (count === 0) {
+        showToast(`No ${isQuestions ? 'questions' : 'exam records'} to back up.`, 'warning');
+        return;
+      }
+      openModal(`
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-slate-900">Encrypted ${isQuestions ? 'Question Bank' : 'Exam History'} Backup</h3>
+            <button id="bkp-close" class="text-slate-400 hover:text-slate-600 text-xl leading-none">&times;</button>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">
+            Your ${count} ${isQuestions ? 'question(s)' : 'exam record(s)'} will be encrypted using <strong>AES-256-GCM</strong> with a password-derived key. Keep this password safe—it cannot be recovered.
+          </p>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Encryption Password</label>
+              <input id="bkp-pass" type="password" placeholder="Enter strong password (min 4 chars)" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Confirm Password</label>
+              <input id="bkp-pass2" type="password" placeholder="Re-enter password" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+            </div>
+            <p id="bkp-err" class="text-xs text-rose-600 hidden"></p>
+          </div>
+          <div class="mt-6 flex justify-end gap-2.5">
+            <button id="bkp-cancel" class="px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 text-slate-700 hover:bg-slate-50">Cancel</button>
+            <button id="bkp-submit" class="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white">Download Encrypted Backup</button>
+          </div>
+        </div>
+      `, 'max-w-md');
+
+      document.getElementById('bkp-close').addEventListener('click', closeModal);
+      document.getElementById('bkp-cancel').addEventListener('click', closeModal);
+      document.getElementById('bkp-submit').addEventListener('click', async () => {
+        const p1 = document.getElementById('bkp-pass').value;
+        const p2 = document.getElementById('bkp-pass2').value;
+        const errEl = document.getElementById('bkp-err');
+        if (p1.length < 4) {
+          errEl.textContent = 'Password must be at least 4 characters.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        if (p1 !== p2) {
+          errEl.textContent = 'Passwords do not match.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        try {
+          const payload = isQuestions ? state.questions : state.examHistory;
+          const envelope = await encryptPayload(payload, p1, backupType);
+          const dateStr = new Date().toISOString().slice(0, 10);
+          downloadJsonFile(envelope, `examvault-${backupType}-backup-${dateStr}.enc.json`);
+          closeModal();
+          showToast(`Encrypted ${backupType} backup downloaded!`, 'success');
+        } catch (err) {
+          errEl.textContent = err.message || 'Encryption failed.';
+          errEl.classList.remove('hidden');
+        }
+      });
+    }
+
+    function openEncryptedRestoreModal(backupType) {
+      const isQuestions = backupType === 'questions';
+      openModal(`
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-slate-900">Restore Encrypted ${isQuestions ? 'Questions' : 'Exam History'}</h3>
+            <button id="rst-close" class="text-slate-400 hover:text-slate-600 text-xl leading-none">&times;</button>
+          </div>
+          <div class="space-y-3.5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Select Backup File (.enc.json / .json)</label>
+              <input id="rst-file" type="file" accept=".json,.enc" class="w-full text-sm text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Decryption Password</label>
+              <input id="rst-pass" type="password" placeholder="Enter backup password" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Restore Mode</label>
+              <div class="flex gap-4 text-sm">
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="radio" name="rst-mode" value="merge" checked class="text-indigo-600" />
+                  <span>Merge with existing</span>
+                </label>
+                <label class="flex items-center gap-1.5 cursor-pointer">
+                  <input type="radio" name="rst-mode" value="replace" class="text-indigo-600" />
+                  <span>Replace existing</span>
+                </label>
+              </div>
+            </div>
+            <p id="rst-err" class="text-xs text-rose-600 hidden"></p>
+          </div>
+          <div class="mt-6 flex justify-end gap-2.5">
+            <button id="rst-cancel" class="px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 text-slate-700 hover:bg-slate-50">Cancel</button>
+            <button id="rst-submit" class="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white">Decrypt &amp; Restore</button>
+          </div>
+        </div>
+      `, 'max-w-md');
+
+      document.getElementById('rst-close').addEventListener('click', closeModal);
+      document.getElementById('rst-cancel').addEventListener('click', closeModal);
+      document.getElementById('rst-submit').addEventListener('click', async () => {
+        const fileInput = document.getElementById('rst-file');
+        const pass = document.getElementById('rst-pass').value;
+        const mode = document.querySelector('input[name="rst-mode"]:checked').value;
+        const errEl = document.getElementById('rst-err');
+
+        if (!fileInput.files || !fileInput.files[0]) {
+          errEl.textContent = 'Please select an encrypted backup file.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        if (!pass) {
+          errEl.textContent = 'Please enter the decryption password.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+
+        try {
+          const text = await fileInput.files[0].text();
+          const envelope = JSON.parse(text);
+          const restored = await decryptPayload(envelope, pass, backupType);
+          if (!Array.isArray(restored)) throw new Error('Corrupted backup payload.');
+
+          if (isQuestions) {
+            if (mode === 'replace') {
+              state.questions = restored;
+              state.selectedQuestionIds.clear();
+            } else {
+              const existingIds = new Set(state.questions.map((q) => q.id));
+              let added = 0;
+              restored.forEach((q) => {
+                if (!existingIds.has(q.id)) {
+                  state.questions.push(q);
+                  added++;
+                }
+              });
+              showToast(`Restored ${added} new question(s) (merged).`, 'success');
+              safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
+              closeModal();
+              renderApp();
+              return;
+            }
+            safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
+            showToast(`Restored ${restored.length} question(s).`, 'success');
+          } else {
+            if (mode === 'replace') {
+              state.examHistory = restored;
+            } else {
+              const existingIds = new Set(state.examHistory.map((h) => h.id));
+              let added = 0;
+              restored.forEach((h) => {
+                if (!existingIds.has(h.id)) {
+                  state.examHistory.push(h);
+                  added++;
+                }
+              });
+              state.examHistory.sort((a, b) => b.date - a.date);
+              safeSave(STORAGE_KEYS.HISTORY, state.examHistory);
+              closeModal();
+              showToast(`Restored ${added} new exam record(s) (merged).`, 'success');
+              renderApp();
+              return;
+            }
+            state.examHistory.sort((a, b) => b.date - a.date);
+            safeSave(STORAGE_KEYS.HISTORY, state.examHistory);
+            showToast(`Restored ${restored.length} exam record(s).`, 'success');
+          }
+          closeModal();
+          renderApp();
+        } catch (err) {
+          errEl.textContent = err.message && err.message.includes('not ')
+            ? err.message
+            : 'Decryption failed. Check your password or backup file.';
+          errEl.classList.remove('hidden');
+        }
+      });
+    }
+
+    // =========================================================================
+    // QUESTION HELPERS
+    // =========================================================================
+    function getUniqueSubjects(questions = state.questions) {
+      return [...new Set(questions.map((q) => q.subject.trim()).filter(Boolean))].sort();
+    }
+
+    function getUniqueTopics(subject = 'ALL', questions = state.questions) {
+      const filtered = subject === 'ALL'
+        ? questions
+        : questions.filter((q) => q.subject === subject);
+      return [...new Set(filtered.map((q) => q.topic.trim()).filter(Boolean))].sort();
+    }
+
+    function getQuestionSource(q) {
+      return (q && q.examSource && q.examSource.trim()) ? q.examSource.trim() : 'Uncategorized';
+    }
+
+    function getUniqueSources(questions = state.questions) {
+      const set = new Set(questions.map((q) => getQuestionSource(q)));
+      const list = [...set].filter((s) => s !== 'Uncategorized').sort();
+      if (set.has('Uncategorized')) list.push('Uncategorized');
+      return list;
+    }
+
+    function getFilteredBankQuestions() {
+      const search = state.bankSearch.trim().toLowerCase();
+      return state.questions.filter((q) => {
+        if (state.bankFilterSource !== 'ALL' && getQuestionSource(q) !== state.bankFilterSource) return false;
+        if (state.bankFilterSubject !== 'ALL' && q.subject !== state.bankFilterSubject) return false;
+        if (state.bankFilterTopic !== 'ALL' && q.topic !== state.bankFilterTopic) return false;
+        if (search) {
+          const hay = `${getQuestionSource(q)} ${q.subject} ${q.topic} ${q.questionText} ${q.options.join(' ')} ${q.explanation || ''}`.toLowerCase();
+          if (!hay.includes(search)) return false;
+        }
+        return true;
+      });
+    }
+
+    function optionLetter(idx) {
+      return ['A', 'B', 'C', 'D', 'E'][idx] || String(idx + 1);
+    }
+
+    // =========================================================================
+    // ADD / EDIT QUESTION MODAL (WITH RICH TEXT / MATH / CODE TOOLBAR & IMAGE)
+    // =========================================================================
+    function openQuestionEditorModal(existingId = null) {
+      const existing = existingId ? state.questions.find((q) => q.id === existingId) : null;
+      const initialOptions = existing ? [...existing.options] : ['', ''];
+      while (initialOptions.length < 2) initialOptions.push('');
+
+      let currentOptions = initialOptions.slice(0, 5);
+      let currentCorrect = existing ? existing.correctIndex : 0;
+      let currentImageData = existing ? (existing.imageData || null) : null;
+      let activeTextareaId = 'qe-question';
+
+      const subjectsList = getUniqueSubjects();
+      const sourcesList = getUniqueSources().filter((s) => s !== 'Uncategorized');
+
+      openModal(`
+        <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between gap-3 bg-slate-50">
+          <h3 class="text-lg font-bold text-slate-900 leading-none">${existing ? 'Edit Question' : 'Add New Question'}</h3>
+          <button id="qe-close" type="button" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 flex items-center justify-center shrink-0" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="p-6 overflow-y-auto space-y-5 flex-1">
+          <!-- Subject, Topic & Exam/Source -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 leading-none mb-1.5">Subject <span class="text-rose-500">*</span></label>
+              <input id="qe-subject" list="qe-subject-list" value="${escapeHtml(existing?.subject || '')}" placeholder="e.g., Physics" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+              <datalist id="qe-subject-list">
+                ${subjectsList.map((s) => `<option value="${escapeHtml(s)}"></option>`).join('')}
+              </datalist>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 leading-none mb-1.5">Topic <span class="text-rose-500">*</span></label>
+              <input id="qe-topic" value="${escapeHtml(existing?.topic || '')}" placeholder="e.g., Calculus" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 leading-none mb-1.5">Exam / Source <span class="font-normal text-slate-400">(Optional)</span></label>
+              <input id="qe-source" list="qe-source-list" value="${escapeHtml(existing?.examSource || '')}" placeholder="e.g., GATE 2024" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+              <datalist id="qe-source-list">
+                ${sourcesList.map((s) => `<option value="${escapeHtml(s)}"></option>`).join('')}
+              </datalist>
+            </div>
+          </div>
+
+          <!-- Formatting Toolbar -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 flex flex-wrap items-center gap-1.5">
+            <span class="text-xs font-semibold text-slate-500 px-1.5 leading-none">Insert:</span>
+            <button type="button" data-fmt="bold" class="h-7 px-2.5 inline-flex items-center justify-center text-xs font-bold bg-white border border-slate-200 rounded-md hover:bg-slate-100" title="Bold">B</button>
+            <button type="button" data-fmt="italic" class="h-7 px-2.5 inline-flex items-center justify-center text-xs italic bg-white border border-slate-200 rounded-md hover:bg-slate-100" title="Italic">I</button>
+            <button type="button" data-fmt="code" class="h-7 px-2.5 inline-flex items-center justify-center text-xs font-mono bg-white border border-slate-200 rounded-md hover:bg-slate-100" title="Inline Code">&lt;/&gt;</button>
+            <button type="button" data-fmt="codeblock" class="h-7 px-2.5 inline-flex items-center justify-center text-xs font-mono bg-white border border-slate-200 rounded-md hover:bg-slate-100" title="Code Block">Code</button>
+            <button type="button" data-fmt="math" class="h-7 px-2.5 inline-flex items-center justify-center text-xs bg-white border border-slate-200 rounded-md hover:bg-slate-100" title="Inline LaTeX Math">$x^2$</button>
+            <button type="button" data-fmt="mathblock" class="h-7 px-2.5 inline-flex items-center justify-center text-xs bg-white border border-slate-200 rounded-md hover:bg-slate-100" title="Display LaTeX Math">$$\frac{a}{b}$$</button>
+            <button type="button" data-fmt="list" class="h-7 px-2.5 inline-flex items-center justify-center text-xs bg-white border border-slate-200 rounded-md hover:bg-slate-100" title="Bullet List">&bull; List</button>
+            <button type="button" id="qe-toggle-preview" class="ml-auto h-7 px-3 inline-flex items-center justify-center text-xs font-semibold rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Show Live Preview</button>
+          </div>
+
+          <!-- Question Text + Live Preview -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 leading-none mb-1.5">Question Text <span class="text-rose-500">*</span> <span class="font-normal text-slate-400">(Markdown, LaTeX $...$, Code \`\`\`)</span></label>
+            <textarea id="qe-question" rows="4" placeholder="Write your question here..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-indigo-500 outline-none">${escapeHtml(existing?.questionText || '')}</textarea>
+            <div id="qe-preview-box" class="hidden mt-2 p-3.5 rounded-lg border border-indigo-200 bg-indigo-50/40">
+              <div class="text-xs font-semibold uppercase tracking-wider text-indigo-600 mb-1">Live Rendered Preview</div>
+              <div id="qe-preview-content" class="text-sm text-slate-800"></div>
+            </div>
+          </div>
+
+          <!-- Optional Diagram Image -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 leading-none mb-1.5">Question Diagram / Image <span class="font-normal text-slate-400">(Optional)</span></label>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <label class="cursor-pointer h-9 px-3.5 inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700">
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <span>Insert Diagram Image</span>
+                <input id="qe-image-input" type="file" accept="image/*" class="hidden" />
+              </label>
+              <button type="button" id="qe-remove-image" class="${currentImageData ? '' : 'hidden'} h-9 px-3.5 inline-flex items-center gap-1.5 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50 border border-rose-200">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                <span>Remove Image</span>
+              </button>
+            </div>
+            <div id="qe-image-preview-wrap" class="${currentImageData ? '' : 'hidden'} mt-3 p-2 border border-slate-200 rounded-lg bg-slate-50 inline-block">
+              <img id="qe-image-preview" src="${currentImageData || ''}" alt="Question diagram" class="max-h-44 max-w-full rounded object-contain" />
+            </div>
+          </div>
+
+          <!-- Options (2 compulsory, up to 5 total) -->
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <label class="text-xs font-semibold text-slate-700 leading-none">Options <span class="text-slate-400 font-normal">(2–5 options — select right answer)</span></label>
+              <button type="button" id="qe-add-option" class="h-7 px-2.5 inline-flex items-center gap-1 rounded-md text-xs font-semibold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 shrink-0">+ Add Option</button>
+            </div>
+            <div id="qe-options-list" class="space-y-2.5"></div>
+          </div>
+
+          <!-- Explanation (Optional) -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 leading-none mb-1.5">Explanation <span class="font-normal text-slate-400">(Optional — rich text, math &amp; code)</span></label>
+            <textarea id="qe-explanation" rows="3" placeholder="Explain why the right answer is correct..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-indigo-500 outline-none">${escapeHtml(existing?.explanation || '')}</textarea>
+          </div>
+
+          <p id="qe-error" class="text-xs text-rose-600 font-medium hidden"></p>
+        </div>
+        <div class="px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-2.5">
+          <button id="qe-cancel" class="px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 text-slate-700 hover:bg-white">Cancel</button>
+          <button id="qe-save" class="px-5 py-2 rounded-lg text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs">${existing ? 'Update Question' : 'Save Question'}</button>
+        </div>
+      `, 'max-w-3xl');
+
+      const qInput = document.getElementById('qe-question');
+      const expInput = document.getElementById('qe-explanation');
+      const previewBox = document.getElementById('qe-preview-box');
+      const previewContent = document.getElementById('qe-preview-content');
+      const togglePreviewBtn = document.getElementById('qe-toggle-preview');
+      let showPreview = false;
+
+      function updatePreview() {
+        if (!showPreview) return;
+        previewContent.innerHTML = renderRichText(qInput.value || '_Nothing to preview yet..._');
+        enhanceRenderedContent(previewContent);
+      }
+
+      [qInput, expInput].forEach((el) => {
+        el.addEventListener('focus', () => { activeTextareaId = el.id; });
+      });
+      qInput.addEventListener('input', updatePreview);
+
+      togglePreviewBtn.addEventListener('click', () => {
+        showPreview = !showPreview;
+        previewBox.classList.toggle('hidden', !showPreview);
+        togglePreviewBtn.textContent = showPreview ? 'Hide Live Preview' : 'Show Live Preview';
+        updatePreview();
+      });
+
+      // Formatting toolbar insertion
+      document.querySelectorAll('[data-fmt]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(activeTextareaId) || qInput;
+          const fmt = btn.dataset.fmt;
+          const start = target.selectionStart;
+          const end = target.selectionEnd;
+          const selected = target.value.slice(start, end) || 'text';
+          let insert = selected;
+          if (fmt === 'bold') insert = `**${selected}**`;
+          else if (fmt === 'italic') insert = `*${selected}*`;
+          else if (fmt === 'code') insert = `\`${selected}\``;
+          else if (fmt === 'codeblock') insert = `\n\`\`\`python\n${selected === 'text' ? 'print("Hello")' : selected}\n\`\`\`\n`;
+          else if (fmt === 'math') insert = `$${selected === 'text' ? 'x^2 + y^2 = r^2' : selected}$`;
+          else if (fmt === 'mathblock') insert = `\n$$\n${selected === 'text' ? '\\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}' : selected}\n$$\n`;
+          else if (fmt === 'list') insert = `\n- Item 1\n- Item 2\n`;
+
+          target.setRangeText(insert, start, end, 'end');
+          target.focus();
+          if (target.id === 'qe-question') updatePreview();
+        });
+      });
+
+      // Image upload
+      const imgInput = document.getElementById('qe-image-input');
+      const imgRemoveBtn = document.getElementById('qe-remove-image');
+      const imgWrap = document.getElementById('qe-image-preview-wrap');
+      const imgPreview = document.getElementById('qe-image-preview');
+
+      imgInput.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          currentImageData = reader.result;
+          imgPreview.src = currentImageData;
+          imgWrap.classList.remove('hidden');
+          imgRemoveBtn.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      });
+
+      imgRemoveBtn.addEventListener('click', () => {
+        currentImageData = null;
+        imgInput.value = '';
+        imgWrap.classList.add('hidden');
+        imgRemoveBtn.classList.add('hidden');
+      });
+
+      // Options rendering
+      const optListEl = document.getElementById('qe-options-list');
+      const addOptBtn = document.getElementById('qe-add-option');
+
+      function renderOptionInputs() {
+        addOptBtn.disabled = currentOptions.length >= 5;
+        addOptBtn.classList.toggle('opacity-50', currentOptions.length >= 5);
+
+        optListEl.innerHTML = currentOptions.map((val, idx) => `
+          <div class="flex items-center gap-2.5">
+            <label class="flex items-center gap-2 cursor-pointer shrink-0" title="Mark Option ${optionLetter(idx)} as right answer">
+              <input type="radio" name="qe-correct" value="${idx}" ${currentCorrect === idx ? 'checked' : ''} class="w-4 h-4 text-emerald-600 focus:ring-emerald-500 shrink-0" />
+              <span class="w-8 h-9 rounded-lg text-xs font-bold flex items-center justify-center shrink-0 ${currentCorrect === idx ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'}">${optionLetter(idx)}</span>
+            </label>
+            <input type="text" data-opt-idx="${idx}" value="${escapeHtml(val)}" placeholder="Option ${optionLetter(idx)} ${idx < 2 ? '(Compulsory)' : '(Optional)'}" class="qe-opt-input flex-1 min-w-0 h-9 px-3 border border-slate-300 rounded-lg text-sm font-mono focus:ring-2 focus:ring-indigo-500 outline-none" />
+            ${idx >= 2 ? `<button type="button" data-remove-opt="${idx}" class="w-9 h-9 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 flex items-center justify-center shrink-0" title="Remove option"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>` : '<div class="w-9 h-9 shrink-0"></div>'}
+          </div>
+        `).join('');
+
+        optListEl.querySelectorAll('input[name="qe-correct"]').forEach((r) => {
+          r.addEventListener('change', (e) => {
+            currentCorrect = Number(e.target.value);
+            renderOptionInputs();
+          });
+        });
+
+        optListEl.querySelectorAll('.qe-opt-input').forEach((inp) => {
+          inp.addEventListener('input', (e) => {
+            currentOptions[Number(e.target.dataset.optIdx)] = e.target.value;
+          });
+          inp.addEventListener('focus', () => {
+            // allow formatting toolbar to target options too
+            activeTextareaId = '';
+          });
+        });
+
+        optListEl.querySelectorAll('[data-remove-opt]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const rIdx = Number(btn.dataset.removeOpt);
+            currentOptions.splice(rIdx, 1);
+            if (currentCorrect === rIdx) currentCorrect = 0;
+            else if (currentCorrect > rIdx) currentCorrect--;
+            renderOptionInputs();
+          });
+        });
+      }
+
+      addOptBtn.addEventListener('click', () => {
+        if (currentOptions.length < 5) {
+          currentOptions.push('');
+          renderOptionInputs();
+        }
+      });
+
+      renderOptionInputs();
+
+      document.getElementById('qe-close').addEventListener('click', closeModal);
+      document.getElementById('qe-cancel').addEventListener('click', closeModal);
+      document.getElementById('qe-save').addEventListener('click', () => {
+        const subject = document.getElementById('qe-subject').value.trim();
+        const topic = document.getElementById('qe-topic').value.trim();
+        const examSource = document.getElementById('qe-source').value.trim();
+        const questionText = qInput.value.trim();
+        const explanation = expInput.value.trim();
+        const errEl = document.getElementById('qe-error');
+
+        const cleanedOptions = currentOptions.map((o) => o.trim());
+        if (!subject || !topic || !questionText) {
+          errEl.textContent = 'Subject, Topic, and Question Text are required.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        if (!cleanedOptions[0] || !cleanedOptions[1]) {
+          errEl.textContent = 'Options A and B are compulsory and cannot be empty.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        // Filter out trailing/empty optional options while remapping correctIndex
+        const finalOptions = [];
+        let mappedCorrect = 0;
+        cleanedOptions.forEach((opt, i) => {
+          if (opt) {
+            if (i === currentCorrect) mappedCorrect = finalOptions.length;
+            finalOptions.push(opt);
+          }
+        });
+        if (finalOptions.length < 2) {
+          errEl.textContent = 'At least 2 non-empty options are required.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        if (!cleanedOptions[currentCorrect]) {
+          errEl.textContent = 'The selected right answer cannot be an empty option.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+
+        const now = Date.now();
+        if (existing) {
+          existing.subject = subject;
+          existing.topic = topic;
+          existing.examSource = examSource;
+          existing.questionText = questionText;
+          existing.imageData = currentImageData;
+          existing.options = finalOptions;
+          existing.correctIndex = mappedCorrect;
+          existing.explanation = explanation;
+          existing.updatedAt = now;
+          showToast('Question updated.', 'success');
+        } else {
+          state.questions.unshift({
+            id: 'q_' + now + '_' + Math.random().toString(36).slice(2, 7),
+            subject,
+            topic,
+            examSource,
+            questionText,
+            imageData: currentImageData,
+            options: finalOptions,
+            correctIndex: mappedCorrect,
+            explanation,
+            createdAt: now,
+            updatedAt: now
+          });
+          showToast('Question added to bank!', 'success');
+        }
+        safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
+        closeModal();
+        renderApp();
+      });
+    }
+
+    // =========================================================================
+    // BULK IMPORT MODAL WITH GUIDE
+    // =========================================================================
+    function downloadCsvFile(csvText, filename) {
+      const blob = new Blob([csvText], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function parseCsvRows(text) {
+      const rows = [];
+      let row = [];
+      let field = '';
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        const next = text[i + 1];
+        if (inQuotes) {
+          if (ch === '"' && next === '"') {
+            field += '"';
+            i++;
+          } else if (ch === '"') {
+            inQuotes = false;
+          } else {
+            field += ch;
+          }
+        } else {
+          if (ch === '"') {
+            inQuotes = true;
+          } else if (ch === ',') {
+            row.push(field);
+            field = '';
+          } else if (ch === '\r' && next === '\n') {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = '';
+            i++;
+          } else if (ch === '\n' || ch === '\r') {
+            row.push(field);
+            rows.push(row);
+            row = [];
+            field = '';
+          } else {
+            field += ch;
+          }
+        }
+      }
+      if (field.length > 0 || row.length > 0) {
+        row.push(field);
+        rows.push(row);
+      }
+      return rows.filter((r) => r.some((cell) => cell.trim() !== ''));
+    }
+
+    function parseBulkCsv(rawCsv, defaultSubject, defaultTopic, defaultSource = '') {
+      const rows = parseCsvRows(rawCsv.trim());
+      if (rows.length < 2) {
+        throw new Error('CSV must include a header row and at least one question row.');
+      }
+      const headers = rows[0].map((h) => h.trim().toLowerCase().replace(/[\s_]+/g, ''));
+      const col = (names) => {
+        for (const n of names) {
+          const i = headers.indexOf(n);
+          if (i !== -1) return i;
+        }
+        return -1;
+      };
+
+      const iSubj = col(['subject']);
+      const iTop = col(['topic']);
+      const iSrc = col(['examsource', 'source', 'exam', 'examname']);
+      const iQ = col(['question', 'questiontext']);
+      const iA = col(['optiona', 'a']);
+      const iB = col(['optionb', 'b']);
+      const iC = col(['optionc', 'c']);
+      const iD = col(['optiond', 'd']);
+      const iE = col(['optione', 'e']);
+      const iAns = col(['answer', 'rightanswer', 'correct', 'correctanswer']);
+      const iExp = col(['explanation', 'exp']);
+
+      if (iQ === -1 || iA === -1 || iB === -1 || iAns === -1) {
+        throw new Error('CSV header must include: question, optionA, optionB, and answer (plus optional subject, topic, optionC, optionD, optionE, explanation).');
+      }
+
+      const now = Date.now();
+      const imported = [];
+
+      for (let r = 1; r < rows.length; r++) {
+        const cells = rows[r];
+        const get = (idx) => (idx !== -1 && cells[idx] !== undefined ? cells[idx].trim() : '');
+
+        const subject = get(iSubj) || defaultSubject.trim();
+        const topic = get(iTop) || defaultTopic.trim();
+        const examSource = get(iSrc) || defaultSource.trim();
+        const questionText = get(iQ);
+        const rawOpts = [get(iA), get(iB), get(iC), get(iD), get(iE)];
+        const ansRaw = get(iAns).toUpperCase();
+        const explanation = get(iExp);
+
+        if (!subject || !topic) {
+          throw new Error(`Row ${r + 1}: Subject and Topic are required (fill the CSV columns or set Default Subject/Topic above).`);
+        }
+        if (!questionText) {
+          throw new Error(`Row ${r + 1}: Question text is empty.`);
+        }
+        if (!rawOpts[0] || !rawOpts[1]) {
+          throw new Error(`Row ${r + 1}: optionA and optionB are compulsory.`);
+        }
+
+        const options = [];
+        const letterMap = ['A', 'B', 'C', 'D', 'E'];
+        let ansLetter = ansRaw;
+        if (/^[1-5]$/.test(ansRaw)) ansLetter = letterMap[Number(ansRaw) - 1];
+
+        let targetOrigIdx = letterMap.indexOf(ansLetter);
+        if (targetOrigIdx === -1) {
+          throw new Error(`Row ${r + 1}: Invalid answer "${ansRaw}". Use A, B, C, D, or E.`);
+        }
+
+        let mappedCorrect = -1;
+        rawOpts.forEach((optVal, oIdx) => {
+          if (optVal) {
+            if (oIdx === targetOrigIdx) mappedCorrect = options.length;
+            options.push(optVal);
+          }
+        });
+
+        if (options.length < 2) {
+          throw new Error(`Row ${r + 1}: At least 2 options are required.`);
+        }
+        if (mappedCorrect === -1) {
+          throw new Error(`Row ${r + 1}: Answer "${ansRaw}" points to an empty option.`);
+        }
+
+        imported.push({
+          id: 'q_' + now + '_' + r + '_' + Math.random().toString(36).slice(2, 6),
+          subject,
+          topic,
+          examSource,
+          questionText,
+          imageData: null,
+          options,
+          correctIndex: mappedCorrect,
+          explanation,
+          createdAt: now,
+          updatedAt: now
+        });
+      }
+      return imported;
+    }
+
+    function openBulkImportModal() {
+      const sampleJson = [
+        {
+          subject: "Physics",
+          topic: "Kinematics",
+          questionText: "A car accelerates uniformly from rest at $2\\text{ m/s}^2$ for $5\\text{ s}$. What is its final velocity?",
+          options: ["$5\\text{ m/s}$", "$10\\text{ m/s}$", "$15\\text{ m/s}$", "$20\\text{ m/s}$"],
+          correctIndex: 1,
+          explanation: "Using $v = u + at = 0 + 2 \\times 5 = 10\\text{ m/s}$."
+        },
+        {
+          subject: "Computer Science",
+          topic: "JavaScript",
+          questionText: "What does `typeof null` return in JavaScript?",
+          options: ["`\"null\"`", "`\"object\"`", "`\"undefined\"`"],
+          correctIndex: 1,
+          explanation: "Due to a historical quirk in JS, `typeof null` evaluates to `\"object\"`."
+        }
+      ];
+
+      const sampleCsvText = `subject,topic,examSource,question,optionA,optionB,optionC,optionD,optionE,answer,explanation
+Physics,Optics,JEE Main 2024,"What is the speed of light in vacuum ($c$)?","$3 \\times 10^8\\text{ m/s}$","$3 \\times 10^6\\text{ m/s}$","$1.5 \\times 10^8\\text{ m/s}$","","",A,"Light travels at approximately $3 \\times 10^8\\text{ m/s}$ in vacuum."
+Computer Science,Python,,"Which keyword defines a function in Python?","\`func\`","\`def\`","\`function\`","","",B,"In Python, functions are defined using the \`def\` keyword."`;
+
+      let activeTab = 'simple'; // 'simple' | 'json'
+      const subjectsList = getUniqueSubjects();
+
+      openModal(`
+        <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+          <h3 class="text-lg font-bold text-slate-900">Bulk Import Questions &amp; Guide</h3>
+          <button id="bi-close" class="text-slate-400 hover:text-slate-600 text-2xl leading-none">&times;</button>
+        </div>
+
+        <!-- Mode Tabs -->
+        <div class="px-6 pt-3 border-b border-slate-200 bg-white flex gap-2">
+          <button type="button" id="bi-tab-simple" class="px-4 py-2 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-700">CSV Mode (Easy)</button>
+          <button type="button" id="bi-tab-json" class="px-4 py-2 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800">JSON Mode (Advanced)</button>
+        </div>
+
+        <div class="p-6 overflow-y-auto space-y-5 flex-1">
+          <!-- CSV TAB -->
+          <div id="bi-panel-simple" class="space-y-4">
+            <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-4 text-sm text-slate-700 space-y-2">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <h4 class="font-bold text-emerald-900">CSV Bulk Import Format Guide</h4>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="bi-load-simple-sample" class="px-3 py-1 rounded-lg bg-white border border-emerald-200 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">Load Sample CSV</button>
+                  <button type="button" id="bi-download-csv-sample" class="px-3 py-1 rounded-lg bg-white border border-emerald-200 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">Download Sample CSV</button>
+                </div>
+              </div>
+              <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm">
+                <li>Prepare your questions in Excel, Google Sheets, or any text editor and export/paste as <strong>CSV</strong>.</li>
+                <li><strong>Required columns:</strong> <code>question</code>, <code>optionA</code>, <code>optionB</code>, and <code>answer</code> (<code>A</code>–<code>E</code>).</li>
+                <li><strong>Optional columns:</strong> <code>subject</code>, <code>topic</code>, <code>examSource</code> (or <code>source</code>/<code>exam</code> — blank rows go to <em>Uncategorized</em>), <code>optionC</code>, <code>optionD</code>, <code>optionE</code>, and <code>explanation</code>.</li>
+                <li>Wrap any text containing commas or line breaks in double quotes <code>"..."</code>. Supports LaTeX math (<code>$...$</code>) and Markdown/code directly.</li>
+              </ul>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs overflow-x-auto font-mono">${escapeHtml(sampleCsvText)}</pre>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Default Subject <span class="text-slate-400 font-normal">(optional)</span></label>
+                <input id="bi-def-subj" list="bi-subj-list" placeholder="e.g., Physics" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                <datalist id="bi-subj-list">
+                  ${subjectsList.map((s) => `<option value="${escapeHtml(s)}"></option>`).join('')}
+                </datalist>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Default Topic <span class="text-slate-400 font-normal">(optional)</span></label>
+                <input id="bi-def-top" placeholder="e.g., General" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Default Exam / Source <span class="text-slate-400 font-normal">(optional)</span></label>
+                <input id="bi-def-source" placeholder="e.g., GATE 2024" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <label class="block text-xs font-semibold text-slate-700">Paste CSV Content or Upload .csv File</label>
+                <input id="bi-simple-file" type="file" accept=".csv,text/csv" class="text-xs text-slate-600 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+              </div>
+              <textarea id="bi-simple-textarea" rows="7" placeholder="subject,topic,question,optionA,optionB,optionC,optionD,answer,explanation&#10;Math,Algebra,2+2=?,3,4,5,6,B,Basic addition" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+              <div id="bi-simple-status" class="text-xs text-slate-500">Ready to parse CSV.</div>
+            </div>
+          </div>
+
+          <!-- JSON TAB (EXISTING) -->
+          <div id="bi-panel-json" class="hidden space-y-4">
+            <div class="bg-indigo-50/70 border border-indigo-200 rounded-xl p-4 text-sm text-slate-700 space-y-2">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <h4 class="font-bold text-indigo-900">Bulk Import Format Guide (JSON)</h4>
+                <button type="button" id="bi-download-sample" class="px-3 py-1 rounded-lg bg-white border border-indigo-200 text-xs font-semibold text-indigo-700 hover:bg-indigo-50">Download Sample JSON</button>
+              </div>
+              <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm">
+                <li>Provide a JSON array <code>[...]</code> of question objects.</li>
+                <li><strong>Required fields:</strong> <code>subject</code> (string), <code>topic</code> (string), <code>questionText</code> (string), <code>options</code> (array of 2 to 5 strings), and <code>correctIndex</code> (0-based index, e.g., <code>0</code> = Option A, <code>1</code> = Option B).</li>
+                <li><strong>Optional fields:</strong> <code>examSource</code> (string, defaults to <em>Uncategorized</em> if omitted), <code>explanation</code> (string), and <code>imageData</code> (base64 Data URL).</li>
+                <li><strong>Math &amp; Code:</strong> Wrap inline math in <code>$...$</code>, display math in <code>$$...$$</code>, and code blocks in triple backticks (remember to escape backslashes <code>\\\\</code> inside JSON strings!).</li>
+              </ul>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs overflow-x-auto font-mono">${escapeHtml(JSON.stringify(sampleJson, null, 2))}</pre>
+            </div>
+
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Upload JSON File</label>
+                <input id="bi-file" type="file" accept=".json" class="w-full text-sm text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Or Paste JSON Array Here</label>
+                <textarea id="bi-textarea" rows="6" placeholder='[{"subject":"Math","topic":"Algebra","questionText":"2+2=?","options":["3","4"],"correctIndex":1}]' class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs font-mono focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <p id="bi-err" class="text-xs text-rose-600 font-medium hidden"></p>
+        </div>
+
+        <div class="px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-2.5">
+          <button id="bi-cancel" class="px-4 py-2 rounded-lg text-sm font-medium border border-slate-300 text-slate-700 hover:bg-white">Cancel</button>
+          <button id="bi-import" class="px-5 py-2 rounded-lg text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white">Validate &amp; Import</button>
+        </div>
+      `, 'max-w-3xl');
+
+      const tabSimple = document.getElementById('bi-tab-simple');
+      const tabJson = document.getElementById('bi-tab-json');
+      const panelSimple = document.getElementById('bi-panel-simple');
+      const panelJson = document.getElementById('bi-panel-json');
+      const errEl = document.getElementById('bi-err');
+
+      function switchTab(tab) {
+        activeTab = tab;
+        errEl.classList.add('hidden');
+        if (tab === 'simple') {
+          tabSimple.className = 'px-4 py-2 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-700';
+          tabJson.className = 'px-4 py-2 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800';
+          panelSimple.classList.remove('hidden');
+          panelJson.classList.add('hidden');
+        } else {
+          tabJson.className = 'px-4 py-2 text-sm font-semibold border-b-2 border-indigo-600 text-indigo-700';
+          tabSimple.className = 'px-4 py-2 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-800';
+          panelJson.classList.remove('hidden');
+          panelSimple.classList.add('hidden');
+        }
+      }
+
+      tabSimple.addEventListener('click', () => switchTab('simple'));
+      tabJson.addEventListener('click', () => switchTab('json'));
+
+      const simpleTextarea = document.getElementById('bi-simple-textarea');
+      const simpleStatus = document.getElementById('bi-simple-status');
+      const defSubjEl = document.getElementById('bi-def-subj');
+      const defTopEl = document.getElementById('bi-def-top');
+      const defSourceEl = document.getElementById('bi-def-source');
+
+      function updateSimplePreview() {
+        const val = simpleTextarea.value.trim();
+        if (!val) {
+          simpleStatus.textContent = 'Ready to parse CSV.';
+          simpleStatus.className = 'text-xs text-slate-500';
+          return;
+        }
+        try {
+          const parsed = parseBulkCsv(val, defSubjEl.value, defTopEl.value, defSourceEl.value);
+          simpleStatus.textContent = `✓ Detected ${parsed.length} valid question(s) ready to import.`;
+          simpleStatus.className = 'text-xs font-semibold text-emerald-700';
+        } catch (e) {
+          simpleStatus.textContent = e.message;
+          simpleStatus.className = 'text-xs text-amber-700';
+        }
+      }
+
+      simpleTextarea.addEventListener('input', updateSimplePreview);
+      defSubjEl.addEventListener('input', updateSimplePreview);
+      defTopEl.addEventListener('input', updateSimplePreview);
+      defSourceEl.addEventListener('input', updateSimplePreview);
+
+      document.getElementById('bi-load-simple-sample').addEventListener('click', () => {
+        simpleTextarea.value = sampleCsvText;
+        updateSimplePreview();
+      });
+      document.getElementById('bi-download-csv-sample').addEventListener('click', () => {
+        downloadCsvFile(sampleCsvText, 'examvault-sample-import.csv');
+      });
+
+      document.getElementById('bi-simple-file').addEventListener('change', async (e) => {
+        const f = e.target.files?.[0];
+        if (!f) return;
+        simpleTextarea.value = await f.text();
+        updateSimplePreview();
+      });
+
+      document.getElementById('bi-close').addEventListener('click', closeModal);
+      document.getElementById('bi-cancel').addEventListener('click', closeModal);
+      document.getElementById('bi-download-sample').addEventListener('click', () => {
+        downloadJsonFile(sampleJson, 'examvault-sample-import.json');
+      });
+      document.getElementById('bi-file').addEventListener('change', async (e) => {
+        const f = e.target.files?.[0];
+        if (!f) return;
+        document.getElementById('bi-textarea').value = await f.text();
+      });
+
+      document.getElementById('bi-import').addEventListener('click', () => {
+        errEl.classList.add('hidden');
+        if (activeTab === 'simple') {
+          const raw = simpleTextarea.value.trim();
+          if (!raw) {
+            errEl.textContent = 'Please paste CSV content or upload a .csv file.';
+            errEl.classList.remove('hidden');
+            return;
+          }
+          try {
+            const imported = parseBulkCsv(raw, defSubjEl.value, defTopEl.value, defSourceEl.value);
+            state.questions = [...imported, ...state.questions];
+            safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
+            closeModal();
+            showToast(`Successfully imported ${imported.length} question(s)!`, 'success');
+            renderApp();
+          } catch (err) {
+            errEl.textContent = err.message || 'Could not parse text format.';
+            errEl.classList.remove('hidden');
+          }
+          return;
+        }
+
+        // JSON Mode (Existing)
+        const raw = document.getElementById('bi-textarea').value.trim();
+        if (!raw) {
+          errEl.textContent = 'Please upload a JSON file or paste JSON content.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        try {
+          const parsed = JSON.parse(raw);
+          if (!Array.isArray(parsed) || parsed.length === 0) {
+            throw new Error('JSON must be a non-empty array of question objects.');
+          }
+          const now = Date.now();
+          const imported = [];
+          parsed.forEach((item, idx) => {
+            if (!item.subject || !item.topic || !item.questionText) {
+              throw new Error(`Item #${idx + 1}: Missing subject, topic, or questionText.`);
+            }
+            if (!Array.isArray(item.options) || item.options.length < 2 || item.options.length > 5) {
+              throw new Error(`Item #${idx + 1}: "options" must be an array of 2 to 5 strings.`);
+            }
+            const cIdx = Number(item.correctIndex);
+            if (Number.isNaN(cIdx) || cIdx < 0 || cIdx >= item.options.length) {
+              throw new Error(`Item #${idx + 1}: Invalid "correctIndex" (must be 0 to ${item.options.length - 1}).`);
+            }
+            imported.push({
+              id: 'q_' + now + '_' + idx + '_' + Math.random().toString(36).slice(2, 6),
+              subject: String(item.subject).trim(),
+              topic: String(item.topic).trim(),
+              examSource: (item.examSource || item.source || item.exam) ? String(item.examSource || item.source || item.exam).trim() : '',
+              questionText: String(item.questionText).trim(),
+              imageData: item.imageData || null,
+              options: item.options.map((o) => String(o).trim()),
+              correctIndex: cIdx,
+              explanation: item.explanation ? String(item.explanation).trim() : '',
+              createdAt: now,
+              updatedAt: now
+            });
+          });
+          state.questions = [...imported, ...state.questions];
+          safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
+          closeModal();
+          showToast(`Successfully imported ${imported.length} question(s)!`, 'success');
+          renderApp();
+        } catch (err) {
+          errEl.textContent = err.message || 'Invalid JSON format.';
+          errEl.classList.remove('hidden');
+        }
+      });
+    }
+
+    // =========================================================================
+    // PAGE 1: QUESTION BANK
+    // =========================================================================
+    function renderQuestionBankPage(main) {
+      const sources = getUniqueSources();
+      const subjects = getUniqueSubjects();
+      const topics = getUniqueTopics(state.bankFilterSubject);
+      const filtered = getFilteredBankQuestions();
+      const selectedCount = state.selectedQuestionIds.size;
+
+      // Group filtered questions either by Exam/Source -> Subject/Topic or Subject -> Topic
+      const grouped = {};
+      if (state.bankGroupBy === 'source') {
+        filtered.forEach((q) => {
+          const srcName = getQuestionSource(q);
+          const subTopic = `${q.subject} • ${q.topic}`;
+          if (!grouped[srcName]) grouped[srcName] = {};
+          if (!grouped[srcName][subTopic]) grouped[srcName][subTopic] = [];
+          grouped[srcName][subTopic].push(q);
+        });
+      } else {
+        filtered.forEach((q) => {
+          if (!grouped[q.subject]) grouped[q.subject] = {};
+          if (!grouped[q.subject][q.topic]) grouped[q.subject][q.topic] = [];
+          grouped[q.subject][q.topic].push(q);
+        });
+      }
+      const primaryKeys = Object.keys(grouped).sort((a, b) => {
+        if (a === 'Uncategorized') return 1;
+        if (b === 'Uncategorized') return -1;
+        return a.localeCompare(b);
+      });
+
+      main.innerHTML = `
+        <div class="space-y-6 fade-in">
+          <!-- Header & Primary Actions -->
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">Question Bank</h1>
+              <p class="text-sm text-slate-500 mt-0.5">${state.questions.length} total questions across ${subjects.length} subject(s)</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="qb-add-btn" class="px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs inline-flex items-center gap-1.5">
+                <span>+</span> Add Question
+              </button>
+              <button id="qb-bulk-import-btn" class="px-3.5 py-2 rounded-xl text-sm font-medium bg-white border border-slate-300 text-slate-700 hover:bg-slate-50">
+                Bulk Import &amp; Guide
+              </button>
+              <button id="qb-backup-btn" class="px-3.5 py-2 rounded-xl text-sm font-medium bg-white border border-slate-300 text-slate-700 hover:bg-slate-50">
+                Encrypted Backup
+              </button>
+              <button id="qb-restore-btn" class="px-3.5 py-2 rounded-xl text-sm font-medium bg-white border border-slate-300 text-slate-700 hover:bg-slate-50">
+                Restore
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Bulk Action Toolbar -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+              <div>
+                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Exam / Source</label>
+                <select id="qb-filter-source" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <option value="ALL">All Sources</option>
+                  ${sources.map((s) => `<option value="${escapeHtml(s)}" ${state.bankFilterSource === s ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Subject</label>
+                <select id="qb-filter-subject" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <option value="ALL">All Subjects</option>
+                  ${subjects.map((s) => `<option value="${escapeHtml(s)}" ${state.bankFilterSubject === s ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Topic</label>
+                <select id="qb-filter-topic" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <option value="ALL">All Topics</option>
+                  ${topics.map((t) => `<option value="${escapeHtml(t)}" ${state.bankFilterTopic === t ? 'selected' : ''}>${escapeHtml(t)}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Group By</label>
+                <select id="qb-group-by" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                  <option value="source" ${state.bankGroupBy === 'source' ? 'selected' : ''}>Exam / Source</option>
+                  <option value="subject" ${state.bankGroupBy === 'subject' ? 'selected' : ''}>Subject &amp; Topic</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Search</label>
+                <input id="qb-search" type="text" value="${escapeHtml(state.bankSearch)}" placeholder="Keyword, source, formula..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <label class="inline-flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
+                  <input id="qb-select-all" type="checkbox" ${filtered.length > 0 && filtered.every((q) => state.selectedQuestionIds.has(q.id)) ? 'checked' : ''} class="w-4 h-4 rounded text-indigo-600" />
+                  <span>Select all shown (${filtered.length})</span>
+                </label>
+                ${selectedCount > 0 ? `
+                  <button id="qb-bulk-delete-btn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 hover:bg-rose-700 text-white">
+                    Bulk Delete (${selectedCount})
+                  </button>
+                ` : ''}
+              </div>
+              <div class="flex items-center gap-2 flex-wrap">
+                ${filtered.length > 0 ? `
+                  <button id="qb-expand-all" class="px-2.5 py-1 rounded-lg text-xs font-medium border border-slate-200 text-slate-600 hover:bg-slate-50">Expand All</button>
+                  <button id="qb-collapse-all" class="px-2.5 py-1 rounded-lg text-xs font-medium border border-slate-200 text-slate-600 hover:bg-slate-50">Wrap All</button>
+                ` : ''}
+                <span class="text-xs text-slate-500">Showing ${filtered.length} of ${state.questions.length} questions</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Questions List (Wrapped by Subject -> Topic) -->
+          ${filtered.length === 0 ? `
+            <div class="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center">
+              <p class="text-slate-600 font-medium">No questions match your current filters.</p>
+              <button id="qb-empty-add" class="mt-3 px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700">+ Add Your First Question</button>
+            </div>
+          ` : primaryKeys.map((subj) => {
+            const isSubjCollapsed = state.collapsedSubjects.has(subj);
+            const topicKeys = Object.keys(grouped[subj]).sort();
+            const subjTotal = topicKeys.reduce((acc, t) => acc + grouped[subj][t].length, 0);
+            return `
+            <section class="bg-slate-50/70 rounded-2xl border border-slate-200/80 p-4 space-y-3">
+              <button type="button" data-toggle-subj="${escapeHtml(subj)}" class="qb-toggle-subj w-full flex items-center justify-between gap-3 text-left">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <svg class="w-4 h-4 text-slate-500 shrink-0 transition-transform duration-200 ${isSubjCollapsed ? '-rotate-90' : 'rotate-0'}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <span class="text-sm font-bold text-slate-900 leading-none truncate">${escapeHtml(subj)}</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold shrink-0">${topicKeys.length} ${state.bankGroupBy === 'source' ? 'group(s)' : 'topic(s)'} &bull; ${subjTotal} Q</span>
+              </button>
+              ${isSubjCollapsed ? '' : `
+                <div class="space-y-3 pt-1 fade-in">
+                  ${topicKeys.map((top) => {
+                    const topicKey = subj + '::' + top;
+                    const isTopCollapsed = !state.expandedTopics.has(topicKey);
+                    return `
+                    <div class="bg-white/80 rounded-xl border border-slate-200 p-3 space-y-3">
+                      <button type="button" data-toggle-topic="${escapeHtml(topicKey)}" class="qb-toggle-topic w-full flex items-center justify-between gap-3 text-left">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                          <svg class="w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${isTopCollapsed ? '-rotate-90' : 'rotate-0'}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                          <span class="text-sm font-bold text-slate-800 leading-none truncate">${escapeHtml(top)}</span>
+                        </div>
+                        <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold shrink-0">${grouped[subj][top].length} Q</span>
+                      </button>
+                      ${isTopCollapsed ? '' : `
+                        <div class="grid grid-cols-1 gap-3.5 fade-in">
+                          ${grouped[subj][top].map((q) => renderQuestionCard(q)).join('')}
+                        </div>
+                      `}
+                    </div>
+                  `;
+                  }).join('')}
+                </div>
+              `}
+            </section>
+          `;
+          }).join('')}
+        </div>
+      `;
+
+      // Bind listeners
+      document.getElementById('qb-add-btn').addEventListener('click', () => openQuestionEditorModal());
+      document.getElementById('qb-empty-add')?.addEventListener('click', () => openQuestionEditorModal());
+      document.getElementById('qb-bulk-import-btn').addEventListener('click', openBulkImportModal);
+      document.getElementById('qb-backup-btn').addEventListener('click', () => openEncryptedBackupModal('questions'));
+      document.getElementById('qb-restore-btn').addEventListener('click', () => openEncryptedRestoreModal('questions'));
+
+      document.getElementById('qb-filter-source').addEventListener('change', (e) => {
+        state.bankFilterSource = e.target.value;
+        renderApp();
+      });
+      document.getElementById('qb-group-by').addEventListener('change', (e) => {
+        state.bankGroupBy = e.target.value;
+        renderApp();
+      });
+      document.getElementById('qb-filter-subject').addEventListener('change', (e) => {
+        state.bankFilterSubject = e.target.value;
+        state.bankFilterTopic = 'ALL';
+        renderApp();
+      });
+      document.getElementById('qb-filter-topic').addEventListener('change', (e) => {
+        state.bankFilterTopic = e.target.value;
+        renderApp();
+      });
+      document.getElementById('qb-search').addEventListener('input', (e) => {
+        state.bankSearch = e.target.value;
+        const pos = e.target.selectionStart;
+        renderApp();
+        const inp = document.getElementById('qb-search');
+        if (inp) {
+          inp.focus();
+          inp.setSelectionRange(pos, pos);
+        }
+      });
+
+      document.getElementById('qb-expand-all')?.addEventListener('click', () => {
+        state.collapsedSubjects.clear();
+        Object.keys(grouped).forEach((subj) => {
+          Object.keys(grouped[subj]).forEach((top) => {
+            state.expandedTopics.add(subj + '::' + top);
+          });
+        });
+        renderApp();
+      });
+
+      document.getElementById('qb-collapse-all')?.addEventListener('click', () => {
+        Object.keys(grouped).forEach((subj) => {
+          state.collapsedSubjects.add(subj);
+        });
+        state.expandedTopics.clear();
+        renderApp();
+      });
+
+      main.querySelectorAll('.qb-toggle-subj').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const s = btn.dataset.toggleSubj;
+          if (state.collapsedSubjects.has(s)) state.collapsedSubjects.delete(s);
+          else state.collapsedSubjects.add(s);
+          renderApp();
+        });
+      });
+
+      main.querySelectorAll('.qb-toggle-topic').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const t = btn.dataset.toggleTopic;
+          if (state.expandedTopics.has(t)) state.expandedTopics.delete(t);
+          else state.expandedTopics.add(t);
+          renderApp();
+        });
+      });
+
+      document.getElementById('qb-select-all').addEventListener('change', (e) => {
+        if (e.target.checked) {
+          filtered.forEach((q) => state.selectedQuestionIds.add(q.id));
+        } else {
+          filtered.forEach((q) => state.selectedQuestionIds.delete(q.id));
+        }
+        renderApp();
+      });
+
+      document.getElementById('qb-bulk-delete-btn')?.addEventListener('click', () => {
+        const count = state.selectedQuestionIds.size;
+        openConfirmModal({
+          title: 'Bulk Delete Questions',
+          message: `Are you sure you want to permanently delete ${count} selected question(s)?`,
+          confirmLabel: `Delete ${count} Question(s)`,
+          danger: true,
+          onConfirm: () => {
+            state.questions = state.questions.filter((q) => !state.selectedQuestionIds.has(q.id));
+            state.selectedQuestionIds.clear();
+            safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
+            showToast(`Deleted ${count} question(s).`, 'success');
+            renderApp();
+          }
+        });
+      });
+
+      main.querySelectorAll('.qb-check-item').forEach((chk) => {
+        chk.addEventListener('change', (e) => {
+          const id = e.target.dataset.id;
+          if (e.target.checked) state.selectedQuestionIds.add(id);
+          else state.selectedQuestionIds.delete(id);
+          renderApp();
+        });
+      });
+
+      main.querySelectorAll('.qb-edit-btn').forEach((btn) => {
+        btn.addEventListener('click', () => openQuestionEditorModal(btn.dataset.id));
+      });
+
+      main.querySelectorAll('.qb-del-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          openConfirmModal({
+            title: 'Delete Question',
+            message: 'Are you sure you want to delete this question from the bank?',
+            confirmLabel: 'Delete',
+            danger: true,
+            onConfirm: () => {
+              state.questions = state.questions.filter((q) => q.id !== id);
+              state.selectedQuestionIds.delete(id);
+              safeSave(STORAGE_KEYS.QUESTIONS, state.questions);
+              showToast('Question deleted.', 'success');
+              renderApp();
+            }
+          });
+        });
+      });
+
+      enhanceRenderedContent(main);
+    }
+
+    function renderQuestionCard(q) {
+      const checked = state.selectedQuestionIds.has(q.id);
+      return `
+        <div class="bg-white rounded-2xl border ${checked ? 'border-indigo-400 ring-2 ring-indigo-100' : 'border-slate-200'} p-4 sm:p-5 shadow-2xs transition-all">
+          <!-- Compact Top Action Bar (keeps full width for question content below) -->
+          <div class="flex items-center justify-between gap-2 pb-2.5 mb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <label class="inline-flex items-center gap-2 text-xs font-medium text-slate-500 cursor-pointer select-none shrink-0">
+                <input type="checkbox" data-id="${escapeHtml(q.id)}" ${checked ? 'checked' : ''} class="qb-check-item w-4 h-4 rounded text-indigo-600 cursor-pointer" />
+                <span>Select</span>
+              </label>
+              <span class="px-2 py-0.5 rounded-md text-[11px] font-medium truncate ${getQuestionSource(q) === 'Uncategorized' ? 'bg-slate-100 text-slate-500' : 'bg-indigo-50 text-indigo-700'}">${escapeHtml(getQuestionSource(q))}</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button data-id="${escapeHtml(q.id)}" class="qb-edit-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-indigo-600 bg-indigo-50/60 hover:bg-indigo-100">Edit</button>
+              <button data-id="${escapeHtml(q.id)}" class="qb-del-btn px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 bg-rose-50/60 hover:bg-rose-100">Delete</button>
+            </div>
+          </div>
+
+          <!-- Full-Width Question Content -->
+          <div class="space-y-3">
+            <div class="text-sm sm:text-base text-slate-900 font-medium">${renderRichText(q.questionText)}</div>
+            ${q.imageData ? `
+              <div class="p-2 bg-slate-50 border border-slate-200 rounded-xl inline-block">
+                <img src="${q.imageData}" alt="Question diagram" class="max-h-48 max-w-full rounded object-contain" />
+              </div>
+            ` : ''}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${q.options.map((opt, idx) => `
+                <div class="flex items-start gap-2 px-3 py-2 rounded-lg border text-sm ${idx === q.correctIndex ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-slate-50 border-slate-200 text-slate-700'}">
+                  <span class="font-bold text-xs px-1.5 py-0.5 rounded ${idx === q.correctIndex ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'} shrink-0 mt-0.5">${optionLetter(idx)}</span>
+                  <div class="flex-1 min-w-0">${renderRichText(opt)}</div>
+                </div>
+              `).join('')}
+            </div>
+            ${q.explanation ? `
+              <details class="text-xs sm:text-sm bg-amber-50/60 border border-amber-200 rounded-xl px-3.5 py-2.5 text-slate-700">
+                <summary class="font-semibold text-amber-900 cursor-pointer select-none">View Explanation</summary>
+                <div class="mt-2 pt-2 border-t border-amber-200/60">${renderRichText(q.explanation)}</div>
+              </details>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // PAGE 2: PRACTICE MODE
+    // =========================================================================
+    function renderPracticePage(main) {
+      const p = state.practice;
+      const subjects = getUniqueSubjects();
+      const topics = getUniqueTopics(p.subject);
+
+      if (!p.active) {
+        const pool = state.questions.filter((q) => {
+          if (p.subject !== 'ALL' && q.subject !== p.subject) return false;
+          if (p.mode === 'subject' && p.topic !== 'ALL' && q.topic !== p.topic) return false;
+          return true;
+        });
+
+        main.innerHTML = `
+          <div class="max-w-3xl mx-auto space-y-6 fade-in">
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">Practice Mode</h1>
+              <p class="text-sm text-slate-500 mt-1">Study at your own pace with instant answer verification and explanations.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-2xs space-y-5">
+              <!-- Mode Selector -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button id="pr-mode-subj" class="p-4 rounded-xl border text-left transition-all ${p.mode === 'subject' ? 'border-indigo-600 bg-indigo-50/60 ring-2 ring-indigo-100' : 'border-slate-200 hover:bg-slate-50'}">
+                  <div class="font-bold text-sm text-slate-900">Subject &amp; Topic Wise</div>
+                  <div class="text-xs text-slate-500 mt-1">Practice all questions from a chosen subject or specific topic.</div>
+                </button>
+                <button id="pr-mode-rand" class="p-4 rounded-xl border text-left transition-all ${p.mode === 'random' ? 'border-indigo-600 bg-indigo-50/60 ring-2 ring-indigo-100' : 'border-slate-200 hover:bg-slate-50'}">
+                  <div class="font-bold text-sm text-slate-900">Random Practice Set</div>
+                  <div class="text-xs text-slate-500 mt-1">Pick a subject and custom number of randomized questions.</div>
+                </button>
+              </div>
+
+              <!-- Filters -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Subject</label>
+                  <select id="pr-subject" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="ALL">All Subjects</option>
+                    ${subjects.map((s) => `<option value="${escapeHtml(s)}" ${p.subject === s ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('')}
+                  </select>
+                </div>
+
+                ${p.mode === 'subject' ? `
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Topic</label>
+                    <select id="pr-topic" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                      <option value="ALL">All Topics</option>
+                      ${topics.map((t) => `<option value="${escapeHtml(t)}" ${p.topic === t ? 'selected' : ''}>${escapeHtml(t)}</option>`).join('')}
+                    </select>
+                  </div>
+                ` : `
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Number of Questions (Max ${pool.length})</label>
+                    <input id="pr-count" type="number" min="1" max="${Math.max(1, pool.length)}" value="${Math.min(p.randomCount, Math.max(1, pool.length))}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                  </div>
+                `}
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 flex items-center justify-between flex-wrap gap-3">
+                <span class="text-sm text-slate-600"><strong>${pool.length}</strong> question(s) available for this selection</span>
+                <button id="pr-start-btn" ${pool.length === 0 ? 'disabled' : ''} class="px-6 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white shadow-xs">
+                  Start Practice
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('pr-mode-subj').addEventListener('click', () => { p.mode = 'subject'; renderApp(); });
+        document.getElementById('pr-mode-rand').addEventListener('click', () => { p.mode = 'random'; renderApp(); });
+        document.getElementById('pr-subject').addEventListener('change', (e) => {
+          p.subject = e.target.value;
+          p.topic = 'ALL';
+          renderApp();
+        });
+        document.getElementById('pr-topic')?.addEventListener('change', (e) => {
+          p.topic = e.target.value;
+          renderApp();
+        });
+        document.getElementById('pr-count')?.addEventListener('input', (e) => {
+          p.randomCount = Math.max(1, Number(e.target.value) || 1);
+        });
+        document.getElementById('pr-start-btn').addEventListener('click', () => {
+          let selectedPool = [...pool];
+          if (p.mode === 'random') {
+            selectedPool.sort(() => Math.random() - 0.5);
+            const cnt = Math.min(Math.max(1, p.randomCount), selectedPool.length);
+            selectedPool = selectedPool.slice(0, cnt);
+          }
+          p.queue = selectedPool;
+          p.currentIndex = 0;
+          p.answers = {};
+          p.checked = {};
+          p.finished = false;
+          p.active = true;
+          pushAppHistory('practice');
+          renderApp();
+        });
+        return;
+      }
+
+      // Finished Practice Summary
+      if (p.finished) {
+        let correct = 0;
+        let wrong = 0;
+        p.queue.forEach((q) => {
+          if (p.answers[q.id] !== undefined) {
+            if (p.answers[q.id] === q.correctIndex) correct++;
+            else wrong++;
+          }
+        });
+        const total = p.queue.length;
+        const pct = total ? Math.round((correct / total) * 100) : 0;
+
+        main.innerHTML = `
+          <div class="max-w-2xl mx-auto bg-white rounded-2xl border border-slate-200 p-8 text-center space-y-5 fade-in">
+            <div class="inline-flex items-center justify-center min-w-[5.5rem] px-5 py-3 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto text-2xl font-bold whitespace-nowrap">${pct}%</div>
+            <h2 class="text-2xl font-bold text-slate-900">Practice Session Complete</h2>
+            <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="text-xs text-slate-500">Total</div>
+                <div class="text-lg font-bold text-slate-900">${total}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                <div class="text-xs text-emerald-700">Right</div>
+                <div class="text-lg font-bold text-emerald-700">${correct}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-rose-50 border border-rose-200">
+                <div class="text-xs text-rose-700">Wrong</div>
+                <div class="text-lg font-bold text-rose-700">${wrong}</div>
+              </div>
+            </div>
+            <div class="flex justify-center gap-3 pt-2">
+              <button id="pr-review-again" class="px-4 py-2 rounded-xl text-sm font-medium border border-slate-300 text-slate-700 hover:bg-slate-50">Review Questions</button>
+              <button id="pr-new-set" class="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white">New Practice Set</button>
+            </div>
+          </div>
+        `;
+        document.getElementById('pr-review-again').addEventListener('click', () => {
+          p.finished = false;
+          p.currentIndex = 0;
+          renderApp();
+        });
+        document.getElementById('pr-new-set').addEventListener('click', () => {
+          p.active = false;
+          renderApp();
+        });
+        return;
+      }
+
+      // Active Practice Question View
+      const q = p.queue[p.currentIndex];
+      const userChoice = p.answers[q.id];
+      const isChecked = !!p.checked[q.id];
+      const progressPct = Math.round(((p.currentIndex + 1) / p.queue.length) * 100);
+
+      main.innerHTML = `
+        <div class="max-w-3xl mx-auto space-y-5 fade-in">
+          <div class="flex items-center justify-between gap-3">
+            <button id="pr-exit" class="text-sm font-medium text-slate-600 hover:text-slate-900">&larr; Back to Practice Setup</button>
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700">Question ${p.currentIndex + 1} of ${p.queue.length}</span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div class="h-full bg-indigo-600 transition-all duration-300" style="width: ${progressPct}%"></div>
+          </div>
+
+          <!-- Question Card -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-2xs space-y-5">
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+              <span class="px-2.5 py-0.5 rounded-md bg-slate-100 font-semibold text-slate-700">${escapeHtml(q.subject)}</span>
+              <span class="px-2.5 py-0.5 rounded-md bg-indigo-50 font-medium text-indigo-700">${escapeHtml(q.topic)}</span>
+              <span class="px-2.5 py-0.5 rounded-md font-medium ${getQuestionSource(q) === 'Uncategorized' ? 'bg-slate-100 text-slate-500' : 'bg-violet-50 text-violet-700'}">${escapeHtml(getQuestionSource(q))}</span>
+            </div>
+
+            <div class="text-base text-slate-900 font-medium">${renderRichText(q.questionText)}</div>
+
+            ${q.imageData ? `
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl inline-block">
+                <img src="${q.imageData}" alt="Question diagram" class="max-h-60 max-w-full rounded object-contain" />
+              </div>
+            ` : ''}
+
+            <div class="space-y-2.5">
+              ${q.options.map((opt, idx) => {
+                let cls = 'border-slate-200 bg-white hover:bg-slate-50';
+                let badgeCls = 'bg-slate-100 text-slate-700';
+                if (isChecked) {
+                  if (idx === q.correctIndex) {
+                    cls = 'border-emerald-500 bg-emerald-50 text-emerald-950';
+                    badgeCls = 'bg-emerald-600 text-white';
+                  } else if (idx === userChoice && userChoice !== q.correctIndex) {
+                    cls = 'border-rose-400 bg-rose-50 text-rose-950';
+                    badgeCls = 'bg-rose-600 text-white';
+                  }
+                } else if (idx === userChoice) {
+                  cls = 'border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-100';
+                  badgeCls = 'bg-indigo-600 text-white';
+                }
+                return `
+                  <button data-opt="${idx}" ${isChecked ? 'disabled' : ''} class="pr-opt-btn w-full text-left flex items-start gap-3 p-3.5 rounded-xl border transition-all ${cls}">
+                    <span class="w-6 h-6 rounded-md text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ${badgeCls}">${optionLetter(idx)}</span>
+                    <div class="flex-1 min-w-0 text-sm">${renderRichText(opt)}</div>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            ${isChecked ? `
+              <div class="p-4 rounded-xl border ${userChoice === q.correctIndex ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'} space-y-2">
+                <div class="font-bold text-sm ${userChoice === q.correctIndex ? 'text-emerald-800' : 'text-amber-900'}">
+                  ${userChoice === q.correctIndex ? 'Correct Answer!' : `Incorrect — Right Answer is Option ${optionLetter(q.correctIndex)}`}
+                </div>
+                ${q.explanation ? `<div class="text-sm text-slate-700">${renderRichText(q.explanation)}</div>` : '<div class="text-xs text-slate-500">No explanation provided for this question.</div>'}
+              </div>
+            ` : ''}
+
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-3 flex-wrap">
+              <button id="pr-prev" ${p.currentIndex === 0 ? 'disabled' : ''} class="px-4 py-2 rounded-xl text-sm font-medium border border-slate-300 text-slate-700 hover:bg-slate-50 disabled:opacity-40">Previous</button>
+              <div class="flex items-center gap-2.5">
+                ${!isChecked ? `
+                  <button id="pr-check" ${userChoice === undefined ? 'disabled' : ''} class="px-5 py-2 rounded-xl text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white">Check Answer</button>
+                ` : ''}
+                ${p.currentIndex < p.queue.length - 1 ? `
+                  <button id="pr-next" class="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white">Next &rarr;</button>
+                ` : `
+                  <button id="pr-finish" class="px-5 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white">Finish Practice</button>
+                `}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('pr-exit').addEventListener('click', () => { p.active = false; renderApp(); });
+      main.querySelectorAll('.pr-opt-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const chosen = Number(btn.dataset.opt);
+          p.answers[q.id] = chosen;
+          main.querySelectorAll('.pr-opt-btn').forEach((b) => {
+            const isSel = Number(b.dataset.opt) === chosen;
+            b.className = `pr-opt-btn w-full text-left flex items-start gap-3 p-3.5 rounded-xl border ${
+              isSel ? 'border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-100' : 'border-slate-200 bg-white hover:bg-slate-50'
+            }`;
+            const badge = b.querySelector('span');
+            if (badge) {
+              badge.className = `w-6 h-6 rounded-md text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ${
+                isSel ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
+              }`;
+            }
+          });
+          const chkBtn = document.getElementById('pr-check');
+          if (chkBtn) chkBtn.disabled = false;
+        });
+      });
+      document.getElementById('pr-check')?.addEventListener('click', () => {
+        p.checked[q.id] = true;
+        renderApp();
+      });
+      document.getElementById('pr-prev').addEventListener('click', () => {
+        if (p.currentIndex > 0) { p.currentIndex--; renderApp(); }
+      });
+      document.getElementById('pr-next')?.addEventListener('click', () => {
+        if (p.currentIndex < p.queue.length - 1) { p.currentIndex++; renderApp(); }
+      });
+      document.getElementById('pr-finish')?.addEventListener('click', () => {
+        p.finished = true;
+        renderApp();
+      });
+
+      enhanceRenderedContent(main);
+    }
+
+    // =========================================================================
+    // PAGE 3: EXAM MODE (STANDARD CBT ONLINE EXAM PATTERN)
+    // =========================================================================
+    function clearExamTimer() {
+      if (state.exam.timerId) {
+        clearInterval(state.exam.timerId);
+        state.exam.timerId = null;
+      }
+    }
+
+    function formatTimer(secs) {
+      const m = Math.floor(secs / 60);
+      const s = secs % 60;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function finalizeExam() {
+      clearExamTimer();
+      const ex = state.exam;
+      const cfg = ex.config;
+      let correctCount = 0;
+      let wrongCount = 0;
+      let unattemptedCount = 0;
+
+      const recordedResponses = ex.questions.map((q, idx) => {
+        const sel = ex.responses[idx] !== undefined ? ex.responses[idx] : null;
+        if (sel === null) unattemptedCount++;
+        else if (sel === q.correctIndex) correctCount++;
+        else wrongCount++;
+        return {
+          questionId: q.id,
+          questionSnapshot: JSON.parse(JSON.stringify(q)),
+          selectedIndex: sel,
+          status: ex.statuses[idx] || 'not_visited'
+        };
+      });
+
+      const score = +(correctCount * cfg.positiveMarks - wrongCount * cfg.negativeMarks).toFixed(2);
+      const maxScore = +(ex.questions.length * cfg.positiveMarks).toFixed(2);
+      const timeTakenSeconds = Math.max(1, Math.round((Date.now() - ex.startTime) / 1000));
+
+      const resultObj = {
+        id: 'exam_' + Date.now(),
+        examName: cfg.examName || 'Mock Test',
+        date: Date.now(),
+        subjectFilter: cfg.subject,
+        totalQuestions: ex.questions.length,
+        durationMinutes: cfg.durationMinutes,
+        timeTakenSeconds,
+        correctCount,
+        wrongCount,
+        unattemptedCount,
+        score,
+        maxScore,
+        positiveMarks: cfg.positiveMarks,
+        negativeMarks: cfg.negativeMarks,
+        responses: recordedResponses
+      };
+
+      state.examHistory.unshift(resultObj);
+      safeSave(STORAGE_KEYS.HISTORY, state.examHistory);
+      ex.lastResult = resultObj;
+      ex.phase = 'result';
+      renderApp();
+    }
+
+    function renderExamPage(main) {
+      const ex = state.exam;
+      const subjects = getUniqueSubjects();
+      const topics = getUniqueTopics(ex.config.subject);
+
+      // Phase 1: Exam Setup
+      if (ex.phase === 'setup') {
+        const pool = state.questions.filter((q) => {
+          if (ex.config.subject !== 'ALL' && q.subject !== ex.config.subject) return false;
+          if (ex.config.topic !== 'ALL' && q.topic !== ex.config.topic) return false;
+          return true;
+        });
+
+        main.innerHTML = `
+          <div class="max-w-3xl mx-auto space-y-6 fade-in">
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">Mock Test / Exam Mode</h1>
+              <p class="text-sm text-slate-500 mt-1">Standard Computer-Based Test (CBT) interface with timer, question palette, mark-for-review, and negative marking.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-2xs space-y-5">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Exam Name</label>
+                <input id="ex-name" type="text" value="${escapeHtml(ex.config.examName)}" placeholder="e.g., Physics Midterm Mock 1" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Subject</label>
+                  <select id="ex-subject" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="ALL">All Subjects</option>
+                    ${subjects.map((s) => `<option value="${escapeHtml(s)}" ${ex.config.subject === s ? 'selected' : ''}>${escapeHtml(s)}</option>`).join('')}
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Topic</label>
+                  <select id="ex-topic" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="ALL">All Topics</option>
+                    ${topics.map((t) => `<option value="${escapeHtml(t)}" ${ex.config.topic === t ? 'selected' : ''}>${escapeHtml(t)}</option>`).join('')}
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Questions (Max ${pool.length})</label>
+                  <input id="ex-qcount" type="number" min="1" max="${Math.max(1, pool.length)}" value="${Math.min(ex.config.questionCount, Math.max(1, pool.length))}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Duration (mins)</label>
+                  <input id="ex-duration" type="number" min="1" max="180" value="${ex.config.durationMinutes}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Right (+ Marks)</label>
+                  <input id="ex-pos" type="number" min="0.5" step="0.5" value="${ex.config.positiveMarks}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Wrong (- Marks)</label>
+                  <input id="ex-neg" type="number" min="0" step="0.25" value="${ex.config.negativeMarks}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 flex items-center justify-between flex-wrap gap-3">
+                <span class="text-sm text-slate-600"><strong>${pool.length}</strong> question(s) available in pool</span>
+                <button id="ex-start-btn" ${pool.length === 0 ? 'disabled' : ''} class="px-6 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white shadow-xs">
+                  Launch Mock Test
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('ex-name').addEventListener('input', (e) => { ex.config.examName = e.target.value; });
+        document.getElementById('ex-subject').addEventListener('change', (e) => { ex.config.subject = e.target.value; ex.config.topic = 'ALL'; renderApp(); });
+        document.getElementById('ex-topic').addEventListener('change', (e) => { ex.config.topic = e.target.value; renderApp(); });
+        document.getElementById('ex-qcount').addEventListener('input', (e) => { ex.config.questionCount = Math.max(1, Number(e.target.value) || 1); });
+        document.getElementById('ex-duration').addEventListener('input', (e) => { ex.config.durationMinutes = Math.max(1, Number(e.target.value) || 1); });
+        document.getElementById('ex-pos').addEventListener('input', (e) => { ex.config.positiveMarks = Math.max(0.5, Number(e.target.value) || 1); });
+        document.getElementById('ex-neg').addEventListener('input', (e) => { ex.config.negativeMarks = Math.max(0, Number(e.target.value) || 0); });
+
+        document.getElementById('ex-start-btn').addEventListener('click', () => {
+          const shuffled = [...pool].sort(() => Math.random() - 0.5);
+          const count = Math.min(Math.max(1, ex.config.questionCount), shuffled.length);
+          ex.questions = shuffled.slice(0, count);
+          ex.currentIndex = 0;
+          ex.responses = {};
+          ex.statuses = {};
+          ex.questions.forEach((_, i) => { ex.statuses[i] = i === 0 ? 'not_answered' : 'not_visited'; });
+          ex.remainingSeconds = ex.config.durationMinutes * 60;
+          ex.startTime = Date.now();
+          ex.phase = 'running';
+
+          clearExamTimer();
+          ex.timerId = setInterval(() => {
+            ex.remainingSeconds--;
+            const timerEl = document.getElementById('cbt-timer');
+            if (timerEl) {
+              timerEl.textContent = formatTimer(Math.max(0, ex.remainingSeconds));
+              if (ex.remainingSeconds <= 60) timerEl.classList.add('text-rose-600', 'animate-pulse');
+            }
+            if (ex.remainingSeconds <= 0) {
+              showToast('Time is up! Exam auto-submitted.', 'warning');
+              finalizeExam();
+            }
+          }, 1000);
+
+          renderApp();
+        });
+        return;
+      }
+
+      // Phase 2: Standard CBT Running Interface
+      if (ex.phase === 'running') {
+        const idx = ex.currentIndex;
+        const q = ex.questions[idx];
+        const selected = ex.responses[idx];
+
+        const counts = { not_visited: 0, not_answered: 0, answered: 0, marked: 0, answered_marked: 0 };
+        ex.questions.forEach((_, i) => { counts[ex.statuses[i] || 'not_visited']++; });
+
+        const paletteBtnStyle = (st, isCurr) => {
+          const ring = isCurr ? 'ring-2 ring-offset-1 ring-indigo-600' : '';
+          if (st === 'answered') return `bg-emerald-600 text-white border-emerald-600 ${ring}`;
+          if (st === 'not_answered') return `bg-rose-500 text-white border-rose-500 ${ring}`;
+          if (st === 'marked') return `bg-purple-600 text-white border-purple-600 ${ring}`;
+          if (st === 'answered_marked') return `bg-purple-600 text-white border-purple-600 relative ${ring}`;
+          return `bg-slate-200 text-slate-700 border-slate-300 ${ring}`;
+        };
+
+        main.innerHTML = `
+          <div class="space-y-4 fade-in">
+            <!-- CBT Top Bar -->
+            <div class="bg-slate-900 text-white rounded-2xl px-5 py-3.5 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+              <div>
+                <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Online Mock Test</div>
+                <div class="font-bold text-base">${escapeHtml(ex.config.examName || 'Mock Test')}</div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="text-right">
+                  <div class="text-[11px] text-slate-400">Time Remaining</div>
+                  <div id="cbt-timer" class="font-mono text-lg font-bold ${ex.remainingSeconds <= 60 ? 'text-rose-400' : 'text-emerald-400'}">${formatTimer(ex.remainingSeconds)}</div>
+                </div>
+                <button id="cbt-submit-btn" class="px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-600 hover:bg-emerald-500 text-white">Submit Exam</button>
+              </div>
+            </div>
+
+            <!-- CBT Split Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+              <!-- Left: Question Area -->
+              <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                <div class="px-5 py-3 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm text-slate-900">Question ${idx + 1} of ${ex.questions.length}</span>
+                    <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 font-medium">${escapeHtml(q.subject)} • ${escapeHtml(q.topic)}</span>
+                  </div>
+                  <div class="text-xs font-medium text-slate-600">
+                    <span class="text-emerald-700">+${ex.config.positiveMarks}</span> / <span class="text-rose-600">-${ex.config.negativeMarks}</span>
+                  </div>
+                </div>
+
+                <div class="p-6 space-y-5">
+                  <div class="text-base text-slate-900 font-medium">${renderRichText(q.questionText)}</div>
+                  ${q.imageData ? `
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl inline-block">
+                      <img src="${q.imageData}" alt="Question diagram" class="max-h-60 max-w-full rounded object-contain" />
+                    </div>
+                  ` : ''}
+
+                  <div class="space-y-2.5">
+                    ${q.options.map((opt, oIdx) => {
+                      const isSel = selected === oIdx;
+                      return `
+                        <button data-cbt-opt="${oIdx}" class="cbt-opt-btn w-full text-left flex items-start gap-3 p-3.5 rounded-xl border transition-all ${isSel ? 'border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-100' : 'border-slate-200 hover:bg-slate-50'}">
+                          <span class="w-6 h-6 rounded-full border flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${isSel ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-300 text-slate-600'}">${optionLetter(oIdx)}</span>
+                          <div class="flex-1 min-w-0 text-sm">${renderRichText(opt)}</div>
+                        </button>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+
+                <!-- CBT Bottom Action Bar -->
+                <div class="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2.5">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <button id="cbt-clear" class="px-3.5 py-2 rounded-lg text-xs font-semibold border border-slate-300 bg-white text-slate-700 hover:bg-slate-100">Clear Response</button>
+                    <button id="cbt-mark-next" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-700 text-white">Mark for Review &amp; Next</button>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button id="cbt-prev" ${idx === 0 ? 'disabled' : ''} class="px-3.5 py-2 rounded-lg text-xs font-semibold border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 disabled:opacity-40">Previous</button>
+                    <button id="cbt-save-next" class="px-4 py-2 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white">Save &amp; Next</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Question Palette -->
+              <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs space-y-4">
+                <h3 class="font-bold text-sm text-slate-900">Question Palette</h3>
+
+                <!-- Legend -->
+                <div class="grid grid-cols-2 gap-2 text-xs text-slate-600">
+                  <div class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-emerald-600 inline-block"></span> Answered (<span id="cbt-cnt-ans">${counts.answered}</span>)</div>
+                  <div class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-rose-500 inline-block"></span> Not Answered (<span id="cbt-cnt-notans">${counts.not_answered}</span>)</div>
+                  <div class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-slate-200 border border-slate-300 inline-block"></span> Not Visited (<span id="cbt-cnt-notvis">${counts.not_visited}</span>)</div>
+                  <div class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-purple-600 inline-block"></span> Marked (<span id="cbt-cnt-marked">${counts.marked + counts.answered_marked}</span>)</div>
+                </div>
+
+                <!-- Grid -->
+                <div class="pt-3 border-t border-slate-100 grid grid-cols-5 gap-2">
+                  ${ex.questions.map((_, i) => {
+                    const st = ex.statuses[i] || 'not_visited';
+                    return `
+                      <button data-jump="${i}" class="cbt-jump-btn h-10 rounded-lg border font-bold text-xs flex items-center justify-center transition-all ${paletteBtnStyle(st, i === idx)}">
+                        ${i + 1}
+                        ${st === 'answered_marked' ? '<span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-1 right-1"></span>' : ''}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        function goToQuestion(targetIdx) {
+          ex.currentIndex = targetIdx;
+          if (ex.statuses[targetIdx] === 'not_visited') {
+            ex.statuses[targetIdx] = 'not_answered';
+          }
+          renderApp();
+        }
+
+        function syncCbtOptionAndPaletteInPlace() {
+          const curSel = ex.responses[idx];
+          main.querySelectorAll('.cbt-opt-btn').forEach((b) => {
+            const isSel = Number(b.dataset.cbtOpt) === curSel;
+            b.className = `cbt-opt-btn w-full text-left flex items-start gap-3 p-3.5 rounded-xl border ${
+              isSel ? 'border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-100' : 'border-slate-200 hover:bg-slate-50'
+            }`;
+            const badge = b.querySelector('span');
+            if (badge) {
+              badge.className = `w-6 h-6 rounded-full border flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
+                isSel ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-300 text-slate-600'
+              }`;
+            }
+          });
+          const liveCounts = { not_visited: 0, not_answered: 0, answered: 0, marked: 0, answered_marked: 0 };
+          ex.questions.forEach((_, i) => { liveCounts[ex.statuses[i] || 'not_visited']++; });
+          const elAns = document.getElementById('cbt-cnt-ans');
+          const elNotAns = document.getElementById('cbt-cnt-notans');
+          const elNotVis = document.getElementById('cbt-cnt-notvis');
+          const elMarked = document.getElementById('cbt-cnt-marked');
+          if (elAns) elAns.textContent = liveCounts.answered;
+          if (elNotAns) elNotAns.textContent = liveCounts.not_answered;
+          if (elNotVis) elNotVis.textContent = liveCounts.not_visited;
+          if (elMarked) elMarked.textContent = liveCounts.marked + liveCounts.answered_marked;
+          const jumpBtn = main.querySelector(`.cbt-jump-btn[data-jump="${idx}"]`);
+          if (jumpBtn) {
+            const st = ex.statuses[idx] || 'not_visited';
+            jumpBtn.className = `cbt-jump-btn h-10 rounded-lg border font-bold text-xs flex items-center justify-center ${paletteBtnStyle(st, true)}`;
+            jumpBtn.innerHTML = `${idx + 1}${st === 'answered_marked' ? '<span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-1 right-1"></span>' : ''}`;
+          }
+        }
+
+        main.querySelectorAll('.cbt-opt-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            ex.responses[idx] = Number(btn.dataset.cbtOpt);
+            ex.statuses[idx] = ex.statuses[idx] === 'marked' || ex.statuses[idx] === 'answered_marked' ? 'answered_marked' : 'answered';
+            syncCbtOptionAndPaletteInPlace();
+          });
+        });
+
+        document.getElementById('cbt-clear').addEventListener('click', () => {
+          delete ex.responses[idx];
+          ex.statuses[idx] = 'not_answered';
+          syncCbtOptionAndPaletteInPlace();
+        });
+
+        document.getElementById('cbt-mark-next').addEventListener('click', () => {
+          ex.statuses[idx] = ex.responses[idx] !== undefined ? 'answered_marked' : 'marked';
+          goToQuestion((idx + 1) % ex.questions.length);
+        });
+
+        document.getElementById('cbt-prev').addEventListener('click', () => {
+          if (idx > 0) goToQuestion(idx - 1);
+        });
+
+        document.getElementById('cbt-save-next').addEventListener('click', () => {
+          if (ex.responses[idx] !== undefined) {
+            ex.statuses[idx] = 'answered';
+          } else {
+            ex.statuses[idx] = 'not_answered';
+          }
+          goToQuestion((idx + 1) % ex.questions.length);
+        });
+
+        main.querySelectorAll('.cbt-jump-btn').forEach((btn) => {
+          btn.addEventListener('click', () => goToQuestion(Number(btn.dataset.jump)));
+        });
+
+        document.getElementById('cbt-submit-btn').addEventListener('click', () => {
+          openConfirmModal({
+            title: 'Submit Mock Test?',
+            message: `Answered: ${counts.answered + counts.answered_marked} | Not Answered: ${counts.not_answered} | Not Visited: ${counts.not_visited}. Ready to submit?`,
+            confirmLabel: 'Submit Exam',
+            danger: false,
+            onConfirm: finalizeExam
+          });
+        });
+
+        enhanceRenderedContent(main);
+        return;
+      }
+
+      // Phase 3: Exam Result View
+      const res = ex.lastResult;
+      main.innerHTML = renderExamResultView(res, () => {
+        ex.phase = 'setup';
+        renderApp();
+      });
+      enhanceRenderedContent(main);
+    }
+
+    function renderExamResultView(res, onBackClick) {
+      const accuracy = (res.correctCount + res.wrongCount) > 0
+        ? Math.round((res.correctCount / (res.correctCount + res.wrongCount)) * 100)
+        : 0;
+
+      setTimeout(() => {
+        document.getElementById('res-back-btn')?.addEventListener('click', onBackClick);
+      }, 0);
+
+      return `
+        <div class="max-w-4xl mx-auto space-y-6 fade-in">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">${escapeHtml(res.examName)} — Results</h1>
+              <p class="text-sm text-slate-500">${new Date(res.date).toLocaleString()} • Time Taken: ${formatTimer(res.timeTakenSeconds)}</p>
+            </div>
+            <button id="res-back-btn" class="px-4 py-2 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white">Done / Back</button>
+          </div>
+
+          <!-- Scorecards -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
+              <div class="text-xs text-slate-500">Score</div>
+              <div class="text-lg sm:text-xl font-bold text-indigo-600 mt-1 break-words">${res.score} / ${res.maxScore}</div>
+            </div>
+            <div class="bg-emerald-50 rounded-2xl border border-emerald-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
+              <div class="text-xs text-emerald-700">Right</div>
+              <div class="text-lg sm:text-xl font-bold text-emerald-700 mt-1">${res.correctCount}</div>
+            </div>
+            <div class="bg-rose-50 rounded-2xl border border-rose-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
+              <div class="text-xs text-rose-700">Wrong</div>
+              <div class="text-lg sm:text-xl font-bold text-rose-700 mt-1">${res.wrongCount}</div>
+            </div>
+            <div class="bg-slate-50 rounded-2xl border border-slate-200 p-3.5 sm:p-4 text-center flex flex-col items-center justify-center min-w-0">
+              <div class="text-xs text-slate-500">Unattempted</div>
+              <div class="text-lg sm:text-xl font-bold text-slate-700 mt-1">${res.unattemptedCount}</div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 text-center col-span-2 sm:col-span-1 flex flex-col items-center justify-center min-w-0">
+              <div class="text-xs text-slate-500">Accuracy</div>
+              <div class="text-lg sm:text-xl font-bold text-slate-900 mt-1 whitespace-nowrap">${accuracy}%</div>
+            </div>
+          </div>
+
+          <!-- Detailed Question Review -->
+          <div class="space-y-4">
+            <h2 class="text-lg font-bold text-slate-900">Detailed Solution Review</h2>
+            ${res.responses.map((item, i) => {
+              const q = item.questionSnapshot;
+              const sel = item.selectedIndex;
+              const isCorrect = sel === q.correctIndex;
+              const badge = sel === null
+                ? '<span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 text-xs font-semibold">Unattempted</span>'
+                : isCorrect
+                  ? '<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-semibold">Right</span>'
+                  : '<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 text-xs font-semibold">Wrong</span>';
+
+              return `
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-3">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="font-bold text-sm text-slate-900">Q${i + 1}. ${escapeHtml(q.subject)} (${escapeHtml(q.topic)})</span>
+                    ${badge}
+                  </div>
+                  <div class="text-sm text-slate-900">${renderRichText(q.questionText)}</div>
+                  ${q.imageData ? `<img src="${q.imageData}" alt="Diagram" class="max-h-44 rounded border border-slate-200" />` : ''}
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    ${q.options.map((opt, oIdx) => {
+                      let cls = 'bg-slate-50 border-slate-200 text-slate-700';
+                      if (oIdx === q.correctIndex) cls = 'bg-emerald-50 border-emerald-400 text-emerald-900 font-medium';
+                      else if (oIdx === sel && !isCorrect) cls = 'bg-rose-50 border-rose-400 text-rose-900';
+                      return `
+                        <div class="px-3 py-2 rounded-lg border text-sm flex items-start gap-2 ${cls}">
+                          <span class="font-bold text-xs mt-0.5">${optionLetter(oIdx)}.</span>
+                          <div class="flex-1 min-w-0">${renderRichText(opt)}</div>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                  ${q.explanation ? `
+                    <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-xs sm:text-sm text-slate-700">
+                      <strong class="text-amber-900">Explanation:</strong>
+                      <div class="mt-1">${renderRichText(q.explanation)}</div>
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // PAGE 4: HISTORY PAGE (WITH SEPARATE BACKUP & RESTORE FOR EXAMS)
+    // =========================================================================
+    function renderHistoryPage(main) {
+      if (state.historyReviewId) {
+        const record = state.examHistory.find((h) => h.id === state.historyReviewId);
+        if (record) {
+          main.innerHTML = renderExamResultView(record, () => {
+            state.historyReviewId = null;
+            renderApp();
+          });
+          enhanceRenderedContent(main);
+          return;
+        }
+        state.historyReviewId = null;
+      }
+
+      // Group exams by local calendar date (YYYY-MM-DD) sorted newest first
+      const dateGroups = {};
+      state.examHistory.forEach((h) => {
+        const d = new Date(h.date);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        if (!dateGroups[key]) {
+          dateGroups[key] = {
+            key,
+            label: d.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }),
+            items: []
+          };
+        }
+        dateGroups[key].items.push(h);
+      });
+      const sortedDateKeys = Object.keys(dateGroups).sort((a, b) => b.localeCompare(a));
+
+      main.innerHTML = `
+        <div class="space-y-6 fade-in">
+          <!-- Aligned Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h1 class="text-2xl font-bold text-slate-900 leading-tight">Exam History</h1>
+                <p class="text-sm text-slate-500 mt-0.5">${state.examHistory.length} conducted exam(s) across ${sortedDateKeys.length} date(s)</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              ${sortedDateKeys.length > 0 ? `
+                <button id="hist-expand-all" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 inline-flex items-center gap-1.5">
+                  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  <span>Expand All</span>
+                </button>
+                <button id="hist-collapse-all" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 inline-flex items-center gap-1.5">
+                  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" /></svg>
+                  <span>Wrap All</span>
+                </button>
+              ` : ''}
+              <button id="hist-backup-btn" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 inline-flex items-center gap-1.5">
+                <svg class="w-4 h-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                <span>Backup Exams</span>
+              </button>
+              <button id="hist-restore-btn" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 inline-flex items-center gap-1.5">
+                <svg class="w-4 h-4 shrink-0 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                <span>Restore Exams</span>
+              </button>
+            </div>
+          </div>
+
+          ${state.examHistory.length === 0 ? `
+            <div class="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center">
+              <p class="text-slate-600 font-medium">No exams conducted yet.</p>
+              <p class="text-xs text-slate-400 mt-1">Complete a mock test in Exam Mode to see your score history here.</p>
+            </div>
+          ` : `
+            <div class="space-y-4">
+              ${sortedDateKeys.map((dKey) => {
+                const group = dateGroups[dKey];
+                const isCollapsed = state.collapsedHistoryDates.has(dKey);
+                return `
+                  <section class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+                    <!-- Collapsible Date Group Header -->
+                    <button type="button" data-hist-date="${escapeHtml(dKey)}" class="hist-toggle-date w-full px-5 py-3.5 bg-slate-50/90 hover:bg-slate-100/80 ${isCollapsed ? '' : 'border-b border-slate-200'} flex items-center justify-between gap-3 text-left">
+                      <div class="flex items-center gap-2.5 min-w-0">
+                        <svg class="w-4 h-4 text-slate-500 shrink-0 transition-transform duration-200 ${isCollapsed ? '-rotate-90' : 'rotate-0'}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        <svg class="w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="text-sm font-bold text-slate-900 truncate">${escapeHtml(group.label)}</span>
+                      </div>
+                      <span class="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold shrink-0">${group.items.length} exam(s)</span>
+                    </button>
+
+                    ${isCollapsed ? '' : `
+                      <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                          <thead>
+                            <tr class="bg-white border-b border-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                              <th class="px-5 py-3 align-middle w-24">Time</th>
+                              <th class="px-5 py-3 align-middle">Exam Name</th>
+                              <th class="px-5 py-3 align-middle text-center w-28">Score</th>
+                              <th class="px-5 py-3 align-middle text-center w-20">Right</th>
+                              <th class="px-5 py-3 align-middle text-center w-20">Wrong</th>
+                              <th class="px-5 py-3 align-middle text-right w-44">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-slate-100 text-sm">
+                            ${group.items.map((h) => `
+                              <tr class="hover:bg-slate-50/70">
+                                <td class="px-5 py-3.5 align-middle text-slate-500 whitespace-nowrap tabular-nums">${new Date(h.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                                <td class="px-5 py-3.5 align-middle font-semibold text-slate-900">${escapeHtml(h.examName)}</td>
+                                <td class="px-5 py-3.5 align-middle text-center font-bold text-indigo-600 whitespace-nowrap tabular-nums">${h.score} / ${h.maxScore}</td>
+                                <td class="px-5 py-3.5 align-middle text-center">
+                                  <span class="inline-flex items-center justify-center min-w-[2rem] px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-semibold text-xs tabular-nums">${h.correctCount}</span>
+                                </td>
+                                <td class="px-5 py-3.5 align-middle text-center">
+                                  <span class="inline-flex items-center justify-center min-w-[2rem] px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 font-semibold text-xs tabular-nums">${h.wrongCount}</span>
+                                </td>
+                                <td class="px-5 py-3.5 align-middle text-right whitespace-nowrap">
+                                  <div class="inline-flex items-center justify-end gap-2">
+                                    <button data-view="${escapeHtml(h.id)}" class="hist-view-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 inline-flex items-center gap-1">
+                                      <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                      <span>Review</span>
+                                    </button>
+                                    <button data-del="${escapeHtml(h.id)}" class="hist-del-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-rose-600 bg-rose-50/70 hover:bg-rose-100 inline-flex items-center gap-1">
+                                      <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                      <span>Delete</span>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            `).join('')}
+                          </tbody>
+                        </table>
+                      </div>
+                    `}
+                  </section>
+                `;
+              }).join('')}
+            </div>
+          `}
+        </div>
+      `;
+
+      document.getElementById('hist-backup-btn').addEventListener('click', () => openEncryptedBackupModal('exams'));
+      document.getElementById('hist-restore-btn').addEventListener('click', () => openEncryptedRestoreModal('exams'));
+
+      document.getElementById('hist-expand-all')?.addEventListener('click', () => {
+        state.collapsedHistoryDates.clear();
+        renderApp();
+      });
+
+      document.getElementById('hist-collapse-all')?.addEventListener('click', () => {
+        sortedDateKeys.forEach((k) => state.collapsedHistoryDates.add(k));
+        renderApp();
+      });
+
+      main.querySelectorAll('.hist-toggle-date').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const k = btn.dataset.histDate;
+          if (state.collapsedHistoryDates.has(k)) state.collapsedHistoryDates.delete(k);
+          else state.collapsedHistoryDates.add(k);
+          renderApp();
+        });
+      });
+
+      main.querySelectorAll('.hist-view-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.historyReviewId = btn.dataset.view;
+          pushAppHistory('history');
+          renderApp(true);
+        });
+      });
+
+      main.querySelectorAll('.hist-del-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.del;
+          openConfirmModal({
+            title: 'Delete Exam Record',
+            message: 'Are you sure you want to delete this exam from your history?',
+            confirmLabel: 'Delete',
+            danger: true,
+            onConfirm: () => {
+              state.examHistory = state.examHistory.filter((h) => h.id !== id);
+              safeSave(STORAGE_KEYS.HISTORY, state.examHistory);
+              showToast('Exam record deleted.', 'success');
+              renderApp();
+            }
+          });
+        });
+      });
+    }
+
+    // =========================================================================
+    // PAGE 5: ABOUT & GUIDE PAGE
+    // =========================================================================
+    async function buildOfflineHtmlBundle(onProgress) {
+      const fetchTextWithFallback = async (urls) => {
+        for (const url of urls) {
+          try {
+            const res = await fetch(url, { mode: 'cors' });
+            if (res.ok) return await res.text();
+          } catch (e) {}
+        }
+        return null;
+      };
+
+      const fetchBase64 = async (url) => {
+        const res = await fetch(url, { mode: 'cors' });
+        if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+        const buf = await res.arrayBuffer();
+        const bytes = new Uint8Array(buf);
+        let bin = '';
+        for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+        return btoa(bin);
+      };
+
+      // 1. Trigger Tailwind JIT to compile all utility classes used anywhere in the app
+      onProgress('Compiling all app styles for offline use...');
+      let tempProbe = null;
+      try {
+        const scriptText = Array.from(document.querySelectorAll('script')).map((s) => s.textContent || '').join(' ');
+        const tokenMatches = scriptText.match(/[a-z0-9:/_.-\[\]]+/gi) || [];
+        const uniqueTokens = [...new Set(tokenMatches.filter((t) => t.length > 1 && t.length < 48 && /[-:]/.test(t)))];
+        tempProbe = document.createElement('div');
+        tempProbe.style.display = 'none';
+        tempProbe.className = uniqueTokens.join(' ');
+        document.body.appendChild(tempProbe);
+        await new Promise((r) => setTimeout(r, 80));
+      } catch (e) {}
+
+      // Snapshot all compiled <style> tags currently in <head> (includes Tailwind JIT output)
+      const compiledHeadStyles = Array.from(document.head.querySelectorAll('style'))
+        .map((st) => st.textContent || '')
+        .filter((txt) => txt.trim().length > 0);
+
+      if (tempProbe && tempProbe.parentNode) tempProbe.remove();
+
+      // 2. Fetch CORS-enabled math, markdown, and code highlighting libraries
+      onProgress('Downloading KaTeX math engine & fonts...');
+      let katexCss = await fetchTextWithFallback([
+        'https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css',
+        'https://unpkg.com/katex@0.16.11/dist/katex.min.css'
+      ]);
+      const katexJs = await fetchTextWithFallback([
+        'https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js',
+        'https://unpkg.com/katex@0.16.11/dist/katex.min.js'
+      ]);
+      const katexAutoJs = await fetchTextWithFallback([
+        'https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js',
+        'https://unpkg.com/katex@0.16.11/dist/contrib/auto-render.min.js'
+      ]);
+
+      if (katexCss) {
+        const fontMatches = [...new Set([...katexCss.matchAll(/url\((fonts\/[^)]+\.woff2)\)/g)].map((m) => m[1]))];
+        await Promise.all(fontMatches.map(async (relPath) => {
+          try {
+            const b64 = await fetchBase64('https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/' + relPath);
+            katexCss = katexCss.split(`url(${relPath})`).join(`url(data:font/woff2;base64,${b64})`);
+          } catch (e) {
+            katexCss = katexCss.split(`url(${relPath})`).join(`url(https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/${relPath})`);
+          }
+        }));
+      }
+
+      onProgress('Downloading Markdown & Syntax Highlighting...');
+      const markedJs = await fetchTextWithFallback([
+        'https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js',
+        'https://unpkg.com/marked@12.0.2/marked.min.js'
+      ]);
+      const hljsCss = await fetchTextWithFallback([
+        'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css',
+        'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css'
+      ]);
+      const hljsJs = await fetchTextWithFallback([
+        'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js',
+        'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js'
+      ]);
+
+      onProgress('Packaging standalone offline HTML...');
+      const safeInlineJs = (code) => code.replace(/<\/script>/gi, '<\\/script>');
+
+      const docClone = document.documentElement.cloneNode(true);
+      const mainEl = docClone.querySelector('#app-main');
+      if (mainEl) mainEl.innerHTML = '';
+      const modalRoot = docClone.querySelector('#modal-root');
+      if (modalRoot) {
+        modalRoot.classList.add('hidden');
+        modalRoot.classList.remove('flex');
+      }
+      const modalBox = docClone.querySelector('#modal-box');
+      if (modalBox) modalBox.innerHTML = '';
+      const toastEl = docClone.querySelector('#toast-container');
+      if (toastEl) toastEl.innerHTML = '';
+
+      const headEl = docClone.querySelector('head');
+      headEl.querySelectorAll('link[rel="preconnect"], link[rel="stylesheet"], script[src], style').forEach((el) => el.remove());
+
+      const injectStyle = (cssText) => {
+        if (!cssText) return;
+        const st = document.createElement('style');
+        st.textContent = cssText;
+        headEl.appendChild(st);
+      };
+      const injectScript = (jsText) => {
+        if (!jsText) return;
+        const sc = document.createElement('script');
+        sc.textContent = safeInlineJs(jsText);
+        headEl.appendChild(sc);
+      };
+
+      // Embed all compiled Tailwind + custom CSS styles inline
+      compiledHeadStyles.forEach((css) => injectStyle(css));
+
+      // Embed fetched libraries inline
+      injectStyle(katexCss);
+      injectScript(katexJs);
+      injectScript(katexAutoJs);
+      injectScript(markedJs);
+      injectStyle(hljsCss);
+      injectScript(hljsJs);
+
+      return '<!DOCTYPE html>\n' + docClone.outerHTML;
+    }
+
+    function renderAboutPage(main) {
+      main.innerHTML = `
+        <div class="max-w-4xl mx-auto space-y-6 fade-in">
+          <div class="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-2xl p-7 text-white shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="px-3 py-1 rounded-full bg-white/15 border border-white/20 text-xs font-semibold tracking-wide">Version 2.0 &bull; Offline-Ready Edition</span>
+              <span class="text-xs text-indigo-100">GitHub Pages &amp; Standalone Browser Compatible</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-bold mt-3">About ExamVault &amp; User Guide</h1>
+            <p class="mt-2 text-indigo-100 text-sm sm:text-base max-w-2xl">
+              An all-in-one MCQ Question Bank, Practice Studio, and CBT Mock Test platform with rich text, LaTeX math, syntax-highlighted code, diagram support, AES-256 encrypted backups, and full offline capability.
+            </p>
+          </div>
+
+          <!-- Offline Bundle & GitHub Pages Card -->
+          <div class="bg-white rounded-2xl border border-indigo-200 p-6 shadow-2xs space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h2 class="font-bold text-base text-slate-900">Offline Bundle &amp; GitHub Pages Deployment</h2>
+                <p class="text-sm text-slate-600 mt-1">
+                  Download all required libraries (Tailwind CSS, KaTeX math + fonts, Markdown, and Highlight.js) bundled inside one standalone <code>index.html</code> file so ExamVault runs <strong>100% offline</strong> in any browser or on your GitHub Pages domain.
+                </p>
+              </div>
+              <button id="about-download-offline" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs inline-flex items-center gap-2 shrink-0">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                <span>Download Offline App</span>
+              </button>
+            </div>
+            <div id="about-offline-status" class="hidden text-xs font-medium px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700"></div>
+            <div class="text-xs text-slate-500 bg-slate-50 rounded-xl p-3.5 border border-slate-200 space-y-1">
+              <div class="font-semibold text-slate-700">How to host on GitHub Pages:</div>
+              <ol class="list-decimal pl-4 space-y-0.5">
+                <li>Click <strong>Download Offline App</strong> above to save the self-contained <code>index.html</code> file.</li>
+                <li>Upload <code>index.html</code> to your GitHub repository root.</li>
+                <li>Open <strong>Settings &rarr; Pages</strong>, select your branch, and save—your offline-ready app is live on your GitHub Pages URL.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-2">
+              <h2 class="font-bold text-slate-900">1. Home Dashboard &amp; Navigation</h2>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                <li><strong>Home Overview:</strong> View live question counts, subject/topic coverage, average exam accuracy, <strong>Subjects at a Glance</strong>, <strong>Exams &amp; Sources</strong>, and <strong>Recent Mock Tests</strong>.</li>
+                <li><strong>Quick Launchers:</strong> Jump straight into Practice Mode, CBT Exam Mode, or filter the Question Bank by clicking any subject or source chip.</li>
+                <li><strong>Back Key &amp; Swipe Support:</strong> Browser Back button/key, Backspace, and mobile Back swipe smoothly return you to your previous page, or exit to your browser home page from Home.</li>
+              </ul>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-2">
+              <h2 class="font-bold text-slate-900">2. Question Bank &amp; Wrapping</h2>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                <li>Add questions with <strong>2 compulsory options (A, B)</strong> and up to <strong>5 total options (A–E)</strong>, optional <strong>Exam Name / Source</strong> (defaults to <em>Uncategorized</em>), <strong>diagram images</strong>, and <strong>Explanations</strong>.</li>
+                <li><strong>Categorization &amp; Wrapping:</strong> Group by <strong>Exam / Source</strong> or <strong>Subject &amp; Topic</strong>; topics are wrapped by default for a clean view with <strong>Wrap All / Expand All</strong>.</li>
+                <li>Filter by Exam/Source, Subject, Topic, or search keywords, and use <strong>Edit</strong>, <strong>Delete</strong>, or <strong>Bulk Delete</strong>.</li>
+              </ul>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-2">
+              <h2 class="font-bold text-slate-900">3. Rich Text, Math &amp; Code</h2>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                <li><strong>Markdown:</strong> Use <code>**bold**</code>, <code>*italic*</code>, lists, and tables.</li>
+                <li><strong>LaTeX Math:</strong> Wrap inline equations in <code>$x^2$</code> and display equations in <code>$$...$$</code>.</li>
+                <li><strong>Code Blocks:</strong> Use inline <code>\`code\`</code> or fenced blocks <code>\`\`\`python ... \`\`\`</code> with automatic syntax highlighting.</li>
+                <li>Use the built-in <strong>Live Preview</strong> button while authoring questions.</li>
+              </ul>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-2">
+              <h2 class="font-bold text-slate-900">4. Practice Mode</h2>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                <li><strong>Subject / Topic Wise:</strong> Drill down into any subject or specific topic.</li>
+                <li><strong>Random Practice Set:</strong> Pick a subject and choose the exact number of randomized questions you want to practice.</li>
+                <li>Displays each question's <strong>Exam / Source</strong> badge and reveals the right option and explanation on check.</li>
+              </ul>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-2">
+              <h2 class="font-bold text-slate-900">5. Standard CBT Exam Mode &amp; History</h2>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                <li>Configure Exam Name, Subject/Topic, Question Count, Duration, and Positive/Negative marking with countdown timer and color-coded <strong>Question Palette</strong>.</li>
+                <li><strong>Date-Grouped History:</strong> Completed exams are grouped into collapsible date sections with score, right/wrong counts, full solution review, and delete controls.</li>
+              </ul>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-2">
+              <h2 class="font-bold text-slate-900">6. Bulk Import &amp; Encrypted Backups</h2>
+              <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                <li><strong>Bulk Import (CSV &amp; JSON):</strong> Import spreadsheets/tables via <strong>CSV Mode</strong> (with downloadable sample CSV &amp; format guide) or structured <strong>JSON Mode</strong>, including optional <code>examSource</code>.</li>
+                <li><strong>AES-256-GCM Encrypted Backup &amp; Restore:</strong> Separate encrypted backup &amp; restore controls on both <strong>Question Bank</strong> and <strong>Exam History</strong>, powered by PBKDF2 + AES-GCM.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('about-download-offline').addEventListener('click', async () => {
+        const btn = document.getElementById('about-download-offline');
+        const statusEl = document.getElementById('about-offline-status');
+        btn.disabled = true;
+        btn.classList.add('opacity-60');
+        statusEl.classList.remove('hidden');
+        try {
+          const html = await buildOfflineHtmlBundle((msg) => {
+            statusEl.textContent = msg;
+          });
+          const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'index.html';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          statusEl.textContent = '✓ Offline bundle downloaded as index.html! Upload it to GitHub Pages or open it offline in any browser.';
+          statusEl.className = 'text-xs font-semibold px-3.5 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800';
+          showToast('Offline app downloaded as index.html!', 'success');
+        } catch (err) {
+          statusEl.textContent = 'Could not fetch one or more CDN libraries (check your internet connection while building the offline bundle).';
+          statusEl.className = 'text-xs font-semibold px-3.5 py-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700';
+          showToast('Offline bundle download failed.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.classList.remove('opacity-60');
+        }
+      });
+    }
+
+    // =========================================================================
+    // PAGE 0: HOME / LANDING PAGE
+    // =========================================================================
+    function renderHomePage(main) {
+      const subjects = getUniqueSubjects();
+      const topics = getUniqueTopics('ALL');
+      const totalQ = state.questions.length;
+      const totalExams = state.examHistory.length;
+
+      let avgAcc = '--';
+      if (totalExams > 0) {
+        let sumAcc = 0;
+        let counted = 0;
+        state.examHistory.forEach((h) => {
+          const att = h.correctCount + h.wrongCount;
+          if (att > 0) {
+            sumAcc += (h.correctCount / att) * 100;
+            counted++;
+          }
+        });
+        avgAcc = counted > 0 ? Math.round(sumAcc / counted) + '%' : '0%';
+      }
+
+      const sources = getUniqueSources();
+      const subjectCounts = {};
+      const sourceCounts = {};
+      state.questions.forEach((q) => {
+        subjectCounts[q.subject] = (subjectCounts[q.subject] || 0) + 1;
+        const srcName = getQuestionSource(q);
+        sourceCounts[srcName] = (sourceCounts[srcName] || 0) + 1;
+      });
+      const recentExams = state.examHistory.slice(0, 3);
+
+      main.innerHTML = `
+        <div class="space-y-8 fade-in">
+          <!-- Hero Section -->
+          <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-indigo-800 text-white p-7 sm:p-10 shadow-lg">
+            <div class="relative z-10 max-w-3xl space-y-4">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-indigo-200">
+                <span>ExamVault MCQ Suite</span>
+                <span>&bull;</span>
+                <span>LaTeX, Code &amp; Diagrams Ready</span>
+              </div>
+              <h1 class="text-3xl sm:text-4xl font-bold tracking-tight leading-tight">
+                Master Your Subjects with Structured Practice &amp; CBT Mock Tests
+              </h1>
+              <p class="text-sm sm:text-base text-indigo-100/90 leading-relaxed max-w-2xl">
+                Build your personal subject- and topic-wise question bank with rich text, mathematical formulas, syntax-highlighted code, and diagrams—then drill in Practice Mode or simulate real online exams.
+              </p>
+              <div class="pt-2 flex flex-wrap items-center gap-3">
+                <button id="home-cta-practice" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white text-indigo-950 hover:bg-indigo-50 shadow-sm">
+                  Start Practice
+                </button>
+                <button id="home-cta-exam" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-indigo-500 hover:bg-indigo-400 text-white shadow-sm">
+                  Launch Mock Test
+                </button>
+                <button id="home-cta-add" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 border border-white/20 text-white">
+                  + Add Question
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Live Stats Row -->
+          <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Question Bank</div>
+              <div class="text-2xl font-bold text-slate-900 mt-1">${totalQ}</div>
+              <div class="text-xs text-slate-500 mt-0.5">Total MCQs stored</div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Coverage</div>
+              <div class="text-2xl font-bold text-indigo-600 mt-1">${subjects.length} <span class="text-sm font-medium text-slate-500">/ ${topics.length}</span></div>
+              <div class="text-xs text-slate-500 mt-0.5">Subjects / Topics</div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Mock Tests</div>
+              <div class="text-2xl font-bold text-slate-900 mt-1">${totalExams}</div>
+              <div class="text-xs text-slate-500 mt-0.5">Exams completed</div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-2xs">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Avg. Accuracy</div>
+              <div class="text-2xl font-bold text-emerald-600 mt-1">${avgAcc}</div>
+              <div class="text-xs text-slate-500 mt-0.5">Across conducted exams</div>
+            </div>
+          </section>
+
+          <!-- Core Workspace Modules -->
+          <section class="space-y-3">
+            <h2 class="text-lg font-bold text-slate-900">Explore Modules</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <button data-home-go="bank" class="home-go-card text-left bg-white hover:border-indigo-400 rounded-2xl border border-slate-200 p-5 shadow-2xs hover:shadow-md transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                </div>
+                <div class="font-bold text-slate-900">Question Bank</div>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Organize by subject &amp; topic, bulk import JSON, and create AES-256 encrypted backups.</p>
+              </button>
+
+              <button data-home-go="practice" class="home-go-card text-left bg-white hover:border-emerald-400 rounded-2xl border border-slate-200 p-5 shadow-2xs hover:shadow-md transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <div class="font-bold text-slate-900">Practice Mode</div>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Drill topic-wise or build custom random sets with instant answer &amp; explanation reveal.</p>
+              </button>
+
+              <button data-home-go="exam" class="home-go-card text-left bg-white hover:border-purple-400 rounded-2xl border border-slate-200 p-5 shadow-2xs hover:shadow-md transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <div class="font-bold text-slate-900">CBT Exam Mode</div>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Standard online test pattern with countdown timer, palette, and negative marking.</p>
+              </button>
+
+              <button data-home-go="history" class="home-go-card text-left bg-white hover:border-amber-400 rounded-2xl border border-slate-200 p-5 shadow-2xs hover:shadow-md transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                </div>
+                <div class="font-bold text-slate-900">History &amp; Backups</div>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Review past scores, inspect solutions, and backup/restore exam records separately.</p>
+              </button>
+            </div>
+          </section>
+
+          <!-- Subjects, Sources & Recent Exam Activity -->
+          <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Subjects at a Glance -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-2xs space-y-4 flex flex-col">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                  </div>
+                  <h2 class="font-bold text-base text-slate-900 leading-none truncate">Subjects at a Glance</h2>
+                </div>
+                <button id="home-view-all-bank" class="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 shrink-0">
+                  <span>View All</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </button>
+              </div>
+              ${subjects.length === 0 ? `
+                <p class="text-sm text-slate-500">No subjects yet. Add your first question to get started.</p>
+              ` : `
+                <div class="flex flex-wrap gap-2.5">
+                  ${subjects.map((s) => `
+                    <button data-subj-jump="${escapeHtml(s)}" class="home-subj-chip px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-indigo-50 hover:border-indigo-300 text-sm font-medium text-slate-800 flex items-center gap-2">
+                      <span>${escapeHtml(s)}</span>
+                      <span class="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-xs font-bold text-indigo-600">${subjectCounts[s] || 0}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+
+            <!-- Exams & Sources at a Glance -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-2xs space-y-4 flex flex-col">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
+                  </div>
+                  <h2 class="font-bold text-base text-slate-900 leading-none truncate">Exams &amp; Sources</h2>
+                </div>
+                <button id="home-view-all-sources" class="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 shrink-0">
+                  <span>View All</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </button>
+              </div>
+              ${sources.length === 0 ? `
+                <p class="text-sm text-slate-500">No questions yet. Add questions to see exam sources.</p>
+              ` : `
+                <div class="flex flex-wrap gap-2.5">
+                  ${sources.map((s) => `
+                    <button data-source-jump="${escapeHtml(s)}" class="home-source-chip px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-violet-50 hover:border-violet-300 text-sm font-medium text-slate-800 flex items-center gap-2">
+                      <span>${escapeHtml(s)}</span>
+                      <span class="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-xs font-bold text-violet-600">${sourceCounts[s] || 0}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+
+            <!-- Recent Mock Tests -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-2xs space-y-4 flex flex-col">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </div>
+                  <h2 class="font-bold text-base text-slate-900 leading-none truncate">Recent Mock Tests</h2>
+                </div>
+                <button id="home-view-all-hist" class="text-xs font-semibold text-indigo-600 hover:underline inline-flex items-center gap-1 shrink-0">
+                  <span>Full History</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </button>
+              </div>
+              ${recentExams.length === 0 ? `
+                <div class="p-5 rounded-xl bg-slate-50 border border-dashed border-slate-200 text-center space-y-2">
+                  <p class="text-sm text-slate-600">You haven't taken any mock tests yet.</p>
+                  <button id="home-empty-exam-btn" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700">Take Your First Exam</button>
+                </div>
+              ` : `
+                <div class="divide-y divide-slate-100">
+                  ${recentExams.map((h) => `
+                    <div class="py-2.5 flex items-center justify-between gap-3">
+                      <div class="min-w-0">
+                        <div class="font-semibold text-sm text-slate-900 truncate">${escapeHtml(h.examName)}</div>
+                        <div class="text-xs text-slate-400">${new Date(h.date).toLocaleDateString()} &bull; ${h.correctCount} Right / ${h.wrongCount} Wrong</div>
+                      </div>
+                      <div class="flex items-center gap-2.5 shrink-0">
+                        <span class="font-bold text-sm text-indigo-600">${h.score}/${h.maxScore}</span>
+                        <button data-home-rev="${escapeHtml(h.id)}" class="home-rev-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-50 text-indigo-700 hover:bg-indigo-100">Review</button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+          </section>
+        </div>
+      `;
+
+      document.getElementById('home-cta-practice').addEventListener('click', () => navigateTo('practice'));
+      document.getElementById('home-cta-exam').addEventListener('click', () => navigateTo('exam'));
+      document.getElementById('home-cta-add').addEventListener('click', () => openQuestionEditorModal());
+      document.getElementById('home-view-all-bank').addEventListener('click', () => {
+        state.bankFilterSource = 'ALL';
+        state.bankFilterSubject = 'ALL';
+        state.bankFilterTopic = 'ALL';
+        state.bankGroupBy = 'subject';
+        navigateTo('bank');
+      });
+      document.getElementById('home-view-all-sources').addEventListener('click', () => {
+        state.bankFilterSource = 'ALL';
+        state.bankFilterSubject = 'ALL';
+        state.bankFilterTopic = 'ALL';
+        state.bankGroupBy = 'source';
+        navigateTo('bank');
+      });
+      document.getElementById('home-view-all-hist').addEventListener('click', () => navigateTo('history'));
+      document.getElementById('home-empty-exam-btn')?.addEventListener('click', () => navigateTo('exam'));
+
+      main.querySelectorAll('.home-go-card').forEach((btn) => {
+        btn.addEventListener('click', () => navigateTo(btn.dataset.homeGo));
+      });
+      main.querySelectorAll('.home-subj-chip').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.bankFilterSource = 'ALL';
+          state.bankFilterSubject = btn.dataset.subjJump;
+          state.bankFilterTopic = 'ALL';
+          state.bankGroupBy = 'subject';
+          navigateTo('bank');
+        });
+      });
+      main.querySelectorAll('.home-source-chip').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.bankFilterSource = btn.dataset.sourceJump;
+          state.bankFilterSubject = 'ALL';
+          state.bankFilterTopic = 'ALL';
+          state.bankGroupBy = 'source';
+          navigateTo('bank');
+        });
+      });
+      main.querySelectorAll('.home-rev-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.currentPage = 'history';
+          state.historyReviewId = btn.dataset.homeRev;
+          pushAppHistory('history');
+          renderApp();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    }
+
+    // =========================================================================
+    // NAVIGATION & APP RENDER LOOP
+    // =========================================================================
+    function renderApp(animate = false) {
+      // Update nav active states (keep font-semibold consistent to prevent width shift)
+      document.querySelectorAll('.nav-btn').forEach((btn) => {
+        const isActive = btn.dataset.nav === state.currentPage;
+        btn.className = isActive
+          ? 'nav-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-indigo-50 text-indigo-700 transition-colors'
+          : 'nav-btn px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors';
+      });
+
+      const main = document.getElementById('app-main');
+      if (state.currentPage === 'home') renderHomePage(main);
+      else if (state.currentPage === 'bank') renderQuestionBankPage(main);
+      else if (state.currentPage === 'practice') renderPracticePage(main);
+      else if (state.currentPage === 'exam') renderExamPage(main);
+      else if (state.currentPage === 'history') renderHistoryPage(main);
+      else if (state.currentPage === 'about') renderAboutPage(main);
+
+      if (!animate) {
+        main.querySelectorAll('.fade-in').forEach((el) => el.classList.remove('fade-in'));
+      }
+    }
+
+    // Browser History & Back Key / Back Swipe Support
+    function getHistorySnapshot(page = state.currentPage) {
+      return {
+        page,
+        historyReviewId: state.historyReviewId,
+        practiceActive: state.practice.active,
+        examPhase: state.exam.phase === 'running' ? 'setup' : state.exam.phase
+      };
+    }
+
+    function pushAppHistory(page = state.currentPage) {
+      try {
+        history.pushState(getHistorySnapshot(page), '', '#' + page);
+      } catch (e) {
+        // Ignore in restricted contexts
+      }
+    }
+
+    function navigateTo(page) {
+      if (state.currentPage === page && !state.historyReviewId && !state.practice.active) {
+        return;
+      }
+      state.currentPage = page;
+      state.historyReviewId = null;
+      if (page !== 'practice') state.practice.active = false;
+      pushAppHistory(page);
+      renderApp(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('popstate', (e) => {
+      // Close any open modal smoothly on back navigation
+      const modalRoot = document.getElementById('modal-root');
+      if (modalRoot && !modalRoot.classList.contains('hidden')) {
+        closeModal();
+      }
+      const validPages = ['home', 'bank', 'practice', 'exam', 'history', 'about'];
+      const hashPage = (location.hash || '').replace('#', '');
+      const targetPage = (e.state && e.state.page) ? e.state.page : (validPages.includes(hashPage) ? hashPage : null);
+
+      if (targetPage) {
+        if (state.exam.phase === 'running' && targetPage !== 'exam') {
+          clearExamTimer();
+          state.exam.phase = 'setup';
+        }
+        state.currentPage = targetPage;
+        state.historyReviewId = (e.state && e.state.historyReviewId) ? e.state.historyReviewId : null;
+        state.practice.active = !!(e.state && e.state.practiceActive);
+        if (e.state && e.state.examPhase && state.exam.phase !== 'running') {
+          state.exam.phase = e.state.examPhase;
+        }
+        document.getElementById('mobile-nav').classList.add('hidden');
+        renderApp(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // Support desktop Backspace key (when not typing in a field) to navigate back
+    window.addEventListener('keydown', (e) => {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+      const isEditable = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable);
+      if (isEditable) return;
+      if (e.key === 'Backspace' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        const modalRoot = document.getElementById('modal-root');
+        if (modalRoot && !modalRoot.classList.contains('hidden')) {
+          closeModal();
+          return;
+        }
+        history.back();
+      }
+    });
+
+    // Nav click listeners
+    document.querySelectorAll('.nav-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (state.exam.phase === 'running' && btn.dataset.nav !== 'exam') {
+          showToast('An exam is currently running. Submit or finish it before leaving.', 'warning');
+          return;
+        }
+        document.getElementById('mobile-nav').classList.add('hidden');
+        navigateTo(btn.dataset.nav);
+      });
+    });
+
+    document.getElementById('brand-home-btn').addEventListener('click', () => {
+      if (state.exam.phase === 'running') {
+        showToast('An exam is currently running. Submit or finish it before leaving.', 'warning');
+        return;
+      }
+      document.getElementById('mobile-nav').classList.add('hidden');
+      navigateTo('home');
+    });
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-nav').classList.toggle('hidden');
+    });
+
+    // Initial render once DOM + deferred scripts are ready
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        history.replaceState(getHistorySnapshot('home'), '', '#home');
+      } catch (e) {}
+      renderApp();
+    });
+    window.addEventListener('load', () => {
+      enhanceRenderedContent(document.getElementById('app-main'));
+    });
+  </script>
+</body>
+</html>
