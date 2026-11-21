@@ -128,9 +128,9 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 gap-3">
         <button type="button" id="brand-home-btn" class="flex items-center gap-2.5 shrink-0 text-left focus:outline-none">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-sm">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 text-white flex items-center justify-center shadow-sm shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
           <div>
@@ -3557,9 +3557,12 @@ self.addEventListener('fetch', (e) => {
     }
 
     // Browser History & Back Key / Back Swipe Support
-    function getHistorySnapshot(page = state.currentPage) {
+    let appHistoryDepth = 0;
+
+    function getHistorySnapshot(page = state.currentPage, depth = appHistoryDepth) {
       return {
         page,
+        depth,
         historyReviewId: state.historyReviewId,
         practiceActive: state.practice.active,
         examPhase: state.exam.phase === 'running' ? 'setup' : state.exam.phase
@@ -3568,7 +3571,8 @@ self.addEventListener('fetch', (e) => {
 
     function pushAppHistory(page = state.currentPage) {
       try {
-        history.pushState(getHistorySnapshot(page), '', '#' + page);
+        appHistoryDepth++;
+        history.pushState(getHistorySnapshot(page, appHistoryDepth), '', '#' + page);
       } catch (e) {
         // Ignore in restricted contexts
       }
@@ -3576,6 +3580,25 @@ self.addEventListener('fetch', (e) => {
 
     function navigateTo(page) {
       if (state.currentPage === page && !state.historyReviewId && !state.practice.active) {
+        return;
+      }
+      if (page === 'home') {
+        const stepsBack = appHistoryDepth;
+        state.currentPage = 'home';
+        state.historyReviewId = null;
+        state.practice.active = false;
+        appHistoryDepth = 0;
+        if (stepsBack > 0) {
+          try {
+            history.go(-stepsBack);
+            return;
+          } catch (e) {}
+        }
+        try {
+          history.replaceState(getHistorySnapshot('home', 0), '', '#home');
+        } catch (e) {}
+        renderApp(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
       state.currentPage = page;
@@ -3601,6 +3624,12 @@ self.addEventListener('fetch', (e) => {
           clearExamTimer();
           state.exam.phase = 'setup';
         }
+        if (e.state && typeof e.state.depth === 'number') {
+          appHistoryDepth = e.state.depth;
+        }
+        if (targetPage === 'home') {
+          appHistoryDepth = 0;
+        }
         state.currentPage = targetPage;
         state.historyReviewId = (e.state && e.state.historyReviewId) ? e.state.historyReviewId : null;
         state.practice.active = !!(e.state && e.state.practiceActive);
@@ -3623,6 +3652,14 @@ self.addEventListener('fetch', (e) => {
         const modalRoot = document.getElementById('modal-root');
         if (modalRoot && !modalRoot.classList.contains('hidden')) {
           closeModal();
+          return;
+        }
+        if (state.currentPage === 'home' && appHistoryDepth === 0) {
+          if (window.history.length <= 1) {
+            try { window.close(); } catch (err) {}
+          } else {
+            history.back();
+          }
           return;
         }
         history.back();
